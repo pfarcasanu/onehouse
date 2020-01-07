@@ -1,6 +1,6 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import "rbx/index.css";
-import { Container, Message, Button, Input, Box, Column, Delete } from "rbx";
+import { Container, Message, Button, Input, Box, Column, Delete, Field, Control } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import Banner from './Banner'
 
@@ -23,7 +23,18 @@ var dummy_str = JSON.stringify(dummy_data);
 
 const ListPage = () => {
 
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState(JSON.parse(dummy_str));
+    const [userInput, setUserInput] = useState("");
+
+    const handleChange = (event) => {
+        console.log("hanlded change");
+        setUserInput(event.target.value);
+    }
+
+    const handleSubmit = () => {
+        items.push({item: userInput, creator: "Paul"});
+        console.log(items)
+    }
 
     return (
         <Container>
@@ -50,16 +61,14 @@ const ListPage = () => {
                             </Message.Header>
                         </Message>
                     </Box>
-                    <Box>
-                        <ColumnGroup>
-                            <Column size={8} offset={1}>
-                                <Input></Input>
-                            </Column>
-                            <Column size={1}>
-                                <Button>Add</Button>
-                            </Column>
-                        </ColumnGroup>
-                    </Box>
+                    <Field kind="addons">
+                        <Control>
+                            <Input placeholder="eggs" onChange={handleChange}/>
+                        </Control>
+                        <Control>
+                            <Button color="info" onClick={handleSubmit}>Add</Button>
+                        </Control>
+                    </Field>
                 </Column>
             </ColumnGroup>
         </Container>
