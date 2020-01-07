@@ -1,7 +1,8 @@
 import React, { Component, useState } from 'react';
 import "rbx/index.css";
-import { Container, Message, Button, Input, List, Column, Delete } from "rbx";
+import { Container, Message, Button, Input, Box, Column, Delete } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
+import Banner from './Banner'
 
 var dummy_data = [
     {
@@ -26,25 +27,29 @@ const ListPage = () => {
 
     return (
         <Container>
+            <Banner/>
             <ColumnGroup>
                 <Column size="half" offset="one-quarter">
-                    <List>
-                        <List.Item>
-                            <Message>
-                                <Message.Header>
-                                    <p>eggs</p>
-                                    <Delete as="button" />
-                                </Message.Header>
-                            </Message>
-                        </List.Item>
-                        <List.Item>
-                            <Message>Milk</Message>
-                            <Delete as="button"/>
-                        </List.Item>
-                        <List.Item>
-                            <Message>Bread</Message>
-                        </List.Item>
-                    </List>
+                    <Box>
+                        <Message>
+                            <Message.Header>
+                                <p>eggs</p>
+                                <Delete as="button" />
+                            </Message.Header>
+                        </Message>
+                        <Message>
+                            <Message.Header>
+                                <p>milk</p>
+                                <Delete as="button" />
+                            </Message.Header>
+                        </Message>
+                        <Message>
+                            <Message.Header>
+                                <p>bread</p>
+                                <Delete as="button" />
+                            </Message.Header>
+                        </Message>
+                    </Box>
                     <Message>
                         <Input></Input>
                         <Button>Submit</Button>
