@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import "rbx/index.css";
 import { Container, Notification } from "rbx";
+import Banner from './Banner'
 
 var dummy_data = [
     {
@@ -25,7 +26,7 @@ const ListPage = () => {
 
     return (
         <Container>
-            Hello World
+            <Banner />
         </Container>
     )
 }
