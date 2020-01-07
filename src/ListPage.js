@@ -50,10 +50,16 @@ const ListPage = () => {
                             </Message.Header>
                         </Message>
                     </Box>
-                    <Message>
-                        <Input></Input>
-                        <Button>Submit</Button>
-                    </Message>
+                    <Box>
+                        <ColumnGroup>
+                            <Column size={8} offset={1}>
+                                <Input></Input>
+                            </Column>
+                            <Column size={1}>
+                                <Button>Add</Button>
+                            </Column>
+                        </ColumnGroup>
+                    </Box>
                 </Column>
             </ColumnGroup>
         </Container>
