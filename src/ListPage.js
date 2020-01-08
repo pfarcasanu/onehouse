@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import "rbx/index.css";
-import { Container, Message, Button, Input, Box, Column, Delete, Field, Control } from "rbx";
+import { Container, Button, Input, Box, Column, Delete, Field, Control } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import Banner from './Banner'
-
+import Item from './Item'
 var dummy_data = [
     {
         item : "paper towels", 
@@ -39,27 +39,16 @@ const ListPage = () => {
     return (
         <Container>
             <Banner/>
+            <Button onClick= {
+                () => { setItems(dummy_data) }
+            }>Refresh</Button>
+            <Button onClick={
+                () => { setItems([]) }
+            }>Reset</Button>
             <ColumnGroup>
                 <Column size="half" offset="one-quarter">
                     <Box>
-                        <Message>
-                            <Message.Header>
-                                <p>eggs</p>
-                                <Delete as="button" />
-                            </Message.Header>
-                        </Message>
-                        <Message>
-                            <Message.Header>
-                                <p>milk</p>
-                                <Delete as="button" />
-                            </Message.Header>
-                        </Message>
-                        <Message>
-                            <Message.Header>
-                                <p>bread</p>
-                                <Delete as="button" />
-                            </Message.Header>
-                        </Message>
+                    <Item items={items}></Item>
                     </Box>
                     <Field kind="addons">
                         <Control>
