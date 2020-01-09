@@ -1,22 +1,21 @@
 import React from "react";
 import "rbx/index.css";
 import { Container, Message, Delete, PageLoader } from "rbx";
+import {deleteItem} from './firebaseHelpers';
 
-
-
-const Item = (prop) => {
+const ItemList = (prop) => {
     const dummy_data = prop.items;
     return (
         dummy_data.map(data =>
-            <Message key={data.creator}>
+            <Message key={data.id}>
                 <Message.Header>
                     <Container>
-                        {data.item}
+                      {data.name}
                     </Container>
-                    <Delete as="button" />
+                    <Delete as="button" onClick={() => deleteItem(data.id)}/>
                 </Message.Header>
             </Message>)
     )
 }
 
-export default Item;
+export default ItemList;
