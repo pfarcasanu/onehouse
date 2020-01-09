@@ -6,7 +6,9 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database().ref();
 
 const saveItem = item => {
-  db.child('items').child(generateUUID()).set(Object.assign(item, { active: true, creator: 'Bob' }))
+  const id = generateUUID();
+  const itemAttrs = { id, active: true, creator: 'Bob' };
+  db.child('items').child(id).set(Object.assign(item, itemAttrs))
     .catch(error => alert(error));
 };
 
