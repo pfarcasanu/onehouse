@@ -16,7 +16,7 @@ const ListPage = ({propItems}) => {
   }
 
   const handleSubmit = () => {
-    saveItem({id: userInput, name: userInput});
+    saveItem({name: userInput});
   }
 
   return (
