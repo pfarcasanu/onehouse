@@ -6,7 +6,7 @@ import {deleteItem} from './firebaseHelpers';
 const ItemList = (prop) => {
     const dummy_data = prop.items;
     return (
-      <Table fullwidth>
+      <Table fullwidth hoverable>
         <Table.Head>
           <Table.Heading>
             Name
