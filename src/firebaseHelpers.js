@@ -16,10 +16,12 @@ const deleteItem = id => {
   db.child('items').child(id).update({active: false})
     .catch(error => alert(error));
 };
-
+const S4 = () =>{
+  return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+  };
 // https://stackoverflow.com/a/38872723
 const generateUUID = () => {
-  return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+  return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
 
 export {
