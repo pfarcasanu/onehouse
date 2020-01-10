@@ -9,7 +9,7 @@ const ItemList = (prop) => {
       <Table fullwidth>
         <Table.Head>
           <Table.Heading>
-            Item Name
+            Name
           </Table.Heading>
           <Table.Heading>
               Creator
