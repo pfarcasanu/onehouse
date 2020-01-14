@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { Container, Button, Input, Box, Column, Delete, Field, Control } from "rbx";
+import { Container, Button, Input, Box, Column, Block, Field, Control, Title } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
@@ -19,6 +19,12 @@ const ListPage = ({propItems,user}) => {
   //test github
   return (
     <Container>
+      <Button size="large" color="link" outlined>
+                  Enter Shopping Mode
+      </Button>
+      <Block>
+
+      </Block>
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Box>
