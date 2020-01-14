@@ -4,10 +4,28 @@ import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
 
-const ListPage = ({propItems,user}) => {
+const useSelection = () => {
+  const [selected, setSelected] = useState([]);
+  const toggle = (x) => {
+    setSelected(selected.includes(x) ? selected.filter(y => y !== x) : [x].concat(selected))
+  };
+  return [ selected, toggle ];
+};
 
-  const [items, setItems] = useState(propItems);
+const ListPage = ({propItems, user}) => {
+  const [selected, toggle] = useSelection();
+  const [shopMode, setShopMode] = useState(false);
   const [userInput, setUserInput] = useState("");
+
+  const shopModeOnClick = () => {
+    if (!shopMode){
+      setShopMode(true);
+      return;
+    }
+    setShopMode(false);
+    if (selected.length === 0) return;
+
+  };
 
   const handleChange = (event) => {
     setUserInput(event.target.value);
@@ -20,16 +38,14 @@ const ListPage = ({propItems,user}) => {
   //test github
   return (
     <Container>
-      <Button size="large" color="link" outlined>
-                  Enter Shopping Mode
+      <Button size="large" color="link" outlined onClick={()=>shopModeOnClick()}>
+        {shopMode ? "Check Out" : "Enter Shopping Mode"}
       </Button>
-      <Block>
-
-      </Block>
+      <Block/>
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Box>
-                <ItemList items={propItems}></ItemList>
+                  <ItemList items={propItems} shopMode={shopMode} selectedState={{selected, toggle}}/>
                 </Box>
                 <Column size="three-fifths" offset="one-fifth">
                 <Field align="centered" kind="addons">

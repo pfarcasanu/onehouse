@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "rbx/index.css";
 import { Container, Message, Delete, Table ,Button, Column} from "rbx";
 import {deleteItem,updateItemNumber} from './firebaseHelpers';
 
+const buttonColor = selected => (selected ? 'success' : null);
+
 const ItemList = (prop) => {
     const dummy_data = prop.items;
+
+    console.log(prop)
+
     return (
       <Table fullwidth hoverable>
         <Table.Head>
@@ -43,7 +48,15 @@ const ItemList = (prop) => {
                   </Button>
                 </Table.Cell>
                 <Table.Cell className="align-right">
-                    <Delete as="button" onClick={() => deleteItem(data.id)}/>
+                  {
+                    prop.shopMode ? 
+                    <Button onClick={() => prop.selectedState.toggle(data.id)}
+                    color={buttonColor(prop.selectedState.selected.includes(data.id))}
+                    >
+                      Purchase
+                    </Button>
+                    : <Delete as="button" onClick={() => deleteItem(data.id)}/>
+                  }
                 </Table.Cell>
               </Table.Row>)
           } 
