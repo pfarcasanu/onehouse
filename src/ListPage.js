@@ -20,7 +20,7 @@ const ListPage = ({propItems}) => {
   return (
     <Container>
         <ColumnGroup>
-            <Column size="half" offset="one-quarter">
+            <Column size={10} offset={1}>
                 <Box>
                 <ItemList items={propItems}></ItemList>
                 </Box>
