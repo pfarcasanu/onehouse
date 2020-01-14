@@ -17,6 +17,9 @@ const ItemList = (prop) => {
           <Table.Heading colSpan="3">
             Quantity
           </Table.Heading>
+          <Table.Heading>
+            
+          </Table.Heading>
         </Table.Head>
         <Table.Body>
           {dummy_data.map(data =>
@@ -27,15 +30,14 @@ const ItemList = (prop) => {
                 <Table.Cell>
                     {data.creator}
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell className="thin-col">
                   <Button size="small" onClick={()=>updateItemNumber(data.id,data.quantity,-1)}>
                     -
                   </Button>
                 </Table.Cell>
-                <Table.Cell>
-                  {data.quantity}
-                </Table.Cell>
-                <Table.Cell>
+                <Table.Cell className="thin-col"
+                  >{data.quantity}</Table.Cell>
+                <Table.Cell className="thin-col">
                   <Button size="small" onClick={()=>updateItemNumber(data.id,data.quantity,1)}>
                     +
                   </Button>
