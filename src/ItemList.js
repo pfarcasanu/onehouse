@@ -42,7 +42,7 @@ const ItemList = (prop) => {
                     +
                   </Button>
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell className="align-right">
                     <Delete as="button" onClick={() => deleteItem(data.id)}/>
                 </Table.Cell>
               </Table.Row>)
