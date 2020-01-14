@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div className="App">
-      <Banner/>
+      <Banner user={user}/>
       <ListPage propItems={items}/>
     </div>
   );
