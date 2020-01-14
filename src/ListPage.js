@@ -14,6 +14,7 @@ const ListPage = ({propItems,user}) => {
   }
 
   const handleSubmit = () => {
+    if(user)
     saveItem({ name:userInput, creator:user.displayName });
   }
   //test github
