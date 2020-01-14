@@ -1,27 +1,25 @@
 import React, { Component, useState } from "react";
 import "rbx/index.css";
-import { Notification, Title, Content, Block, Message, Button} from "rbx";
+import {
+  Notification,
+  Title,
+  Content,
+  Block,
+  Message,
+  Button,
+  Column
+} from "rbx";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
-const Banner = ({user}) => {
-  return (
-    <React.Fragment>
-      <Block>
-      </Block>
-      <Notification color="warning">
-        <Title>OneHouse</Title>
-        <Content>
-            The best way to shop for your home!
-        </Content>
-      </Notification>
-      
-      {user ? <Welcome user={user} /> : <SignIn />}
-
-      </React.Fragment>
-  );
+const Banner = ({ user }) => {
+  if (user) {
+    return <User user={user} />;
+  } else {
+    return <NoUser />;
+  }
 };
 
 const uiConfig = {
@@ -32,16 +30,39 @@ const uiConfig = {
   }
 };
 
-const Welcome = ({ user }) => (
-  <Message color="info">
-    <Message.Header>
-      Welcome, {user.displayName}
-      <Button primary onClick={() => firebase.auth().signOut()}>
-        Log out
-      </Button>
-    </Message.Header>
-  </Message>
-);
+const NoUser = () => {
+  return (
+    <React.Fragment>
+      <Block></Block>
+      <Column size={8} offset={2}>
+        <Notification color="warning">
+          <Title>OneHouse</Title>
+          <Content>The best way to shop for your home!</Content>
+          <SignIn />
+        </Notification>
+      </Column>
+      <Block></Block>
+    </React.Fragment>
+  );
+};
+
+const User = ({ user }) => {
+  return (
+    <React.Fragment>
+      <Block></Block>
+      <Column size={8} offset={2}>
+        <Notification color="warning">
+          <Title>{user.displayName}'s OneHouse</Title>
+          <Content>Add items to get started!</Content>
+          <Button color="link" primary onClick={() => firebase.auth().signOut()}>
+            Log out
+          </Button>
+        </Notification>
+      </Column>
+      <Block></Block>
+    </React.Fragment>
+  );
+};
 
 const SignIn = () => (
   <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
