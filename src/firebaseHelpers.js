@@ -5,10 +5,12 @@ import firebaseConfig from './Config.js';
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database().ref();
 
-const saveItem = item => {
+const saveItem = ({ name, creator }) => {
   const id = generateUUID();
-  const itemAttrs = { id, active: true, creator: 'Bob' ,quantity:1};
-  db.child('items').child(id).set(Object.assign(item, itemAttrs))
+  const itemAttrs = { id, active: true, creator,quantity:1};
+  console.log(name);
+  console.log(creator);
+  db.child('items').child(id).set(Object.assign({name}, itemAttrs))
     .catch(error => alert(error));
 };
 

@@ -32,7 +32,7 @@ function App() {
   return (
     <div className="App">
       <Banner user={user}/>
-      <ListPage propItems={items}/>
+      <ListPage propItems={items} user ={user}/>
     </div>
   );
 }

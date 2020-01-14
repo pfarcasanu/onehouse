@@ -4,7 +4,7 @@ import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
 
-const ListPage = ({propItems}) => {
+const ListPage = ({propItems,user}) => {
 
   const [items, setItems] = useState(propItems);
   const [userInput, setUserInput] = useState("");
@@ -14,7 +14,7 @@ const ListPage = ({propItems}) => {
   }
 
   const handleSubmit = () => {
-    saveItem({name: userInput});
+    saveItem({ name:userInput, creator:user.displayName });
   }
 
   return (
