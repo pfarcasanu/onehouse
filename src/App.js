@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import "rbx/index.css";
 import './App.css';
 import firebase from 'firebase/app';
 import 'firebase/database';
-import firebaseConfig from './Config.js'
 import ListPage from './ListPage'
+import Banner from './Banner';
 import {db} from './firebaseHelpers';
 
 const createItemList = groceryList => (
@@ -12,6 +13,7 @@ const createItemList = groceryList => (
 
 function App() {
   const [items, setItems] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const handleData = snap => {
@@ -23,8 +25,13 @@ function App() {
     return () => { db.off('value', handleData); };
   }, []);
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(setUser);
+  }, []);
+
   return (
     <div className="App">
+      <Banner/>
       <ListPage propItems={items}/>
     </div>
   );
