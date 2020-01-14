@@ -24,14 +24,16 @@ const ListPage = ({propItems,user}) => {
                 <Box>
                 <ItemList items={propItems}></ItemList>
                 </Box>
-                <Field kind="addons">
-                    <Control>
-                        <Input placeholder="eggs" onChange={handleChange}/>
+                <Column size="three-fifths" offset="one-fifth">
+                <Field align="centered" kind="addons">
+                    <Control expanded>
+                        <Input size="medium" placeholder="Eggs" onChange={handleChange}/>
                     </Control>
                     <Control>
-                        <Button color="info" onClick={handleSubmit}>Add</Button>
+                        <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>
                     </Control>
                 </Field>
+                </Column>
             </Column>
         </ColumnGroup>
     </Container>
