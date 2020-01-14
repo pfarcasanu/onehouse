@@ -35,7 +35,7 @@ const NoUser = () => {
     <React.Fragment>
       <Block></Block>
       <Column size={8} offset={2}>
-        <Notification color="warning">
+        <Notification color="link">
           <Title>OneHouse</Title>
           <Content>The best way to shop for your home!</Content>
           <SignIn />
@@ -51,10 +51,10 @@ const User = ({ user }) => {
     <React.Fragment>
       <Block></Block>
       <Column size={8} offset={2}>
-        <Notification color="warning">
+        <Notification color="link">
           <Title>{user.displayName}'s OneHouse</Title>
           <Content>Add items to get started!</Content>
-          <Button color="link" primary onClick={() => firebase.auth().signOut()}>
+          <Button inverted color="link" primary onClick={() => firebase.auth().signOut()}>
             Log out
           </Button>
         </Notification>
