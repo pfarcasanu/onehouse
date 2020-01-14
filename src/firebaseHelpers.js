@@ -24,8 +24,8 @@ const S4 = () =>{
 const generateUUID = () => {
   return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
-const updateItemNumber=(id,number)=>{
-  db.child('items').child(id).update({quantity:number+1})
+const updateItemNumber=(id,number, incr)=>{
+  db.child('items').child(id).update({quantity:number+incr})
     .catch(error => alert(error));
 
 }
