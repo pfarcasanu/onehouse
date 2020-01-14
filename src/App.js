@@ -29,6 +29,7 @@ function App() {
     firebase.auth().onAuthStateChanged(setUser);
   }, []);
 
+
   return (
     <div className="App">
       <Banner user={user}/>
