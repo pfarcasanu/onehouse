@@ -7,14 +7,19 @@ import {saveItem} from './firebaseHelpers';
 const ListPage = ({propItems,user}) => {
 
   const [items, setItems] = useState(propItems);
-  const [userInput, setUserInput] = useState("");
+  const [productName, setProductName] = useState("");
+  const [unit, setUnit] = useState("");
 
-  const handleChange = (event) => {
-    setUserInput(event.target.value);
+  const handleProductChange = (event) => {
+    setProductName(event.target.value);
+  }
+
+  const handleUnitChange = (event) => {
+    setUnit(event.target.value);
   }
 
   const handleSubmit = () => {
-    saveItem({ name:userInput, creator:user.displayName });
+    saveItem({ name: productName, unit: unit, creator: user.displayName });
   }
   //test github
   return (
@@ -22,12 +27,15 @@ const ListPage = ({propItems,user}) => {
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Box>
-                <ItemList items={propItems}></ItemList>
+                <ItemList items={propItems} user={user}></ItemList>
                 </Box>
                 <Column size="three-fifths" offset="one-fifth">
                 <Field align="centered" kind="addons">
                     <Control expanded>
-                        <Input size="medium" placeholder="Eggs" onChange={handleChange}/>
+                        <Input size="medium" placeholder="Eggs" onChange={handleProductChange}/>
+                    </Control>
+                    <Control expanded>
+                        <Input size="medium" placeholder="1 dozen" onChange={handleUnitChange}/>
                     </Control>
                     <Control>
                         <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>

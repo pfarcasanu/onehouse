@@ -3,42 +3,74 @@ import "rbx/index.css";
 import { Container, Message, Delete, Table ,Button, Column} from "rbx";
 import {deleteItem,updateItemNumber} from './firebaseHelpers';
 
-const ItemList = (prop) => {
-    const dummy_data = prop.items;
+const ItemList = ({ items, user }) => {
+    /*const dummy_data = [
+      {
+        id: "id1",
+        productName: "eggs",
+        unit: "1 dozen",
+        neededBy: [
+          {
+            name: "Tommy",
+            quantity: 3
+          },
+          {
+            name: "Paul",
+            quantity: 2
+          }
+        ],
+        active: true
+      }
+    ]*/
     return (
       <Table fullwidth hoverable>
         <Table.Head>
-          <Table.Heading>
-            Name
-          </Table.Heading>
-          <Table.Heading>
-              Creator
-          </Table.Heading>
-          <Table.Heading colSpan="3">
-            Quantity
-          </Table.Heading>
-          <Table.Heading>
-            
-          </Table.Heading>
+          <Table.Row>
+            <Table.Heading>
+              Product Name
+            </Table.Heading>
+            <Table.Heading>
+              Unit
+            </Table.Heading>
+            <Table.Heading>
+              Needed by
+            </Table.Heading>
+            <Table.Heading colSpan="3">
+              Quantity
+            </Table.Heading>
+            <Table.Heading>
+
+            </Table.Heading>
+          </Table.Row>
         </Table.Head>
         <Table.Body>
-          {dummy_data.map(data =>
+          {items.map(data =>
               <Table.Row key={data.id}>
                 <Table.Cell>
-                  {data.name}
+                  {data.productName}
                 </Table.Cell>
                 <Table.Cell>
-                    {data.creator}
+                  {data.unit}
+                </Table.Cell>
+                <Table.Cell>
+                  {Object.values(data.neededBy).map(person => (
+                    <React.Fragment key={`${data.id}-${person.name}`}>
+                      {person.name} ({person.quantity})
+                      <br />
+                    </React.Fragment>
+                  ))}
                 </Table.Cell>
                 <Table.Cell className="thin-col">
-                  <Button size="small" onClick={()=>updateItemNumber(data.id,data.quantity,-1)}>
+                  <Button size="small" onClick={()=>updateItemNumber(user.displayName,data,-1)}>
                     -
                   </Button>
                 </Table.Cell>
                 <Table.Cell className="thin-col"
-                  >{data.quantity}</Table.Cell>
+                  >{Object.values(data.neededBy).reduce((total, person) => (
+                    total + person.quantity
+                  ), 0)}</Table.Cell>
                 <Table.Cell className="thin-col">
-                  <Button size="small" onClick={()=>updateItemNumber(data.id,data.quantity,1)}>
+                  <Button size="small" onClick={()=>updateItemNumber(user.displayName,data,1)}>
                     +
                   </Button>
                 </Table.Cell>
@@ -49,7 +81,6 @@ const ItemList = (prop) => {
           } 
         </Table.Body>
       </Table>
-        
     )
 }
 
