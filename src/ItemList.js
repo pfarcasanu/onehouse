@@ -3,7 +3,7 @@ import { Container, Message, Delete, Table ,Button, Column} from "rbx";
 import {deleteItem,updateItemNumber} from './firebaseHelpers';
 
 const ItemList = ({ items, user, shopMode, selectedState }) => {
-    const buttonColor = selected => (selected ? 'success' : null);
+    const buttonColor = selected => (selected ? 'info' : null);
     return (
       <Table fullwidth hoverable>
         <Table.Head>

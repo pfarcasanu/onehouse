@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import { Container, Message, Delete, Title ,Button, Column, Modal, Box, Notification} from "rbx";
-import {deleteItem,updateItemNumber} from './firebaseHelpers';
+import React from "react";
+import {Title, Modal, Box, Notification, Content, Block, Level} from "rbx";
 
 
 const Checkout = ({modalState, selected})=>{
-    console.log(selected)
     return(
         <Modal active={modalState.modalState}>
             <Modal.Background onClick = {()=> modalState.setModalState(false)}/>
             <Modal.Content>
-                <Notification color="white">
+                <Box color="white">
                     <Notification color="link">
-                        <Title align="centered">Your Purchases</Title>
+                        <Title>Your Purchases:</Title>
                         {selected.map(item => <Item item={item}/>)}
                     </Notification>
-                </Notification>
+                </Box>
             </Modal.Content>
         </Modal>
 
@@ -22,13 +20,19 @@ const Checkout = ({modalState, selected})=>{
 }
 
 const Item = ({item}) =>{
-    console.log('hello', item)
+    console.log(item)
     return (
-    <Notification color="black">
-        <Title>
-            {item.productName}
-        </Title>
-    </Notification>)
+    <Box color="black">
+        <Title size={5}>{item.productName} for {getNames(item.neededBy)} </Title>
+    </Box>)
+}
+
+const getNames = (array) =>{
+    let my_string = ""
+    for (let i=0; i<array.length; i++){
+        my_string = my_string + " " + array[i].name
+    }
+    return(my_string)
 }
 
 export default Checkout
