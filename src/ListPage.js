@@ -3,6 +3,7 @@ import { Container, Button, Input, Box, Column, Block, Field, Control, Title } f
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
+import Checkout from './Checkout'
 
 const useSelection = () => {
   const [selected, setSelected] = useState([]);
@@ -16,6 +17,7 @@ const ListPage = ({propItems, user}) => {
   const [selected, toggle] = useSelection();
   const [shopMode, setShopMode] = useState(false);
   const [userInput, setUserInput] = useState("");
+  const [modalState, setModalState] = useState(false);
 
   const shopModeOnClick = () => {
     if (!shopMode){
@@ -24,7 +26,9 @@ const ListPage = ({propItems, user}) => {
     }
     setShopMode(false);
     if (selected.length === 0) return;
-
+    else{
+      setModalState(true);
+    }
   };
 
   const handleChange = (event) => {
@@ -38,6 +42,7 @@ const ListPage = ({propItems, user}) => {
   //test github
   return (
     <Container>
+      <Checkout modalState={{modalState, setModalState}} selected={propItems.filter(item=> selected.includes(item.id))}/>
       <Button size="large" color="link" outlined onClick={()=>shopModeOnClick()}>
         {shopMode ? "Check Out" : "Enter Shopping Mode"}
       </Button>

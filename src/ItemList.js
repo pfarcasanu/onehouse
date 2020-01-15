@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "rbx/index.css";
 import { Container, Message, Delete, Table ,Button, Column} from "rbx";
 import {deleteItem,updateItemNumber} from './firebaseHelpers';
 
@@ -7,9 +6,6 @@ const buttonColor = selected => (selected ? 'success' : null);
 
 const ItemList = (prop) => {
     const dummy_data = prop.items;
-
-    console.log(prop)
-
     return (
       <Table fullwidth hoverable>
         <Table.Head>
