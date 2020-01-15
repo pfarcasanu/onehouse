@@ -44,6 +44,7 @@ const ListPage = ({propItems, user}) => {
     saveItem({ name: productName, unit: unit, creator: user.displayName });
   }
   //test github
+  if(user){
   return (
     <Container>
       <Checkout modalState={{modalState, setModalState}} selected={propItems.filter(item=> selected.includes(item.id))}/>
@@ -72,7 +73,11 @@ const ListPage = ({propItems, user}) => {
             </Column>
         </ColumnGroup>
     </Container>
+  )}
+  else return(
+    <div>Please Login</div>
   )
+
 }
 
 export default ListPage;
