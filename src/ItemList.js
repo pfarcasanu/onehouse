@@ -35,22 +35,25 @@ const ItemList = ({ items, user, shopMode, selectedState }) => {
                   {data.unit}
                 </Table.Cell>
                 <Table.Cell>
-                  {Object.values(data.neededBy).map(person => (
+                  {!!data.neededBy ? Object.values(data.neededBy).map(person => (
                     <React.Fragment key={`${data.id}-${person.name}`}>
                       {person.name} ({person.quantity})
                       <br />
                     </React.Fragment>
-                  ))}
+                  )) : ""}
                 </Table.Cell>
                 <Table.Cell className="thin-col">
-                  <Button size="small" onClick={()=>updateItemNumber(user.displayName,data,-1)}>
+                  <Button 
+                    disabled={!data.neededBy}
+                    size="small"
+                    onClick={()=>updateItemNumber(user.displayName,data,-1)}>
                     -
                   </Button>
                 </Table.Cell>
                 <Table.Cell className="thin-col"
-                  >{Object.values(data.neededBy).reduce((total, person) => (
+                  >{!!data.neededBy ? Object.values(data.neededBy).reduce((total, person) => (
                     total + person.quantity
-                  ), 0)}</Table.Cell>
+                  ), 0) : 0}</Table.Cell>
                 <Table.Cell className="thin-col">
                   <Button size="small" onClick={()=>updateItemNumber(user.displayName,data,1)}>
                     +

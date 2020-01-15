@@ -39,27 +39,29 @@ const generateUUID = () => {
 }
 
 const updateItemNumber = (personName, data, incr) => {
+  if (data.neededBy === undefined) {
+    data.neededBy = [];
+  }
   const entryIndex = Object.values(data.neededBy).findIndex(person => person.name === personName);
-  if (entryIndex === -1 && incr > 0) {
-    db.child('items').child(data.id).update(
-      {
-        neededBy: [
-          ...Object.values(data.neededBy),
-          {
-            name: personName,
-            quantity: 1
-          }
-        ]
-      }
-    )
-    .catch(error => alert(error));
+  if (entryIndex === -1) {
+    if (incr > 0) {
+      db.child('items').child(data.id).update(
+        {
+          neededBy: [
+            ...Object.values(data.neededBy),
+            {
+              name: personName,
+              quantity: 1
+            }
+          ]
+        }
+      )
+      .catch(error => alert(error));
+    }
   } else {
     const updatedQty = Math.max(0, Object.values(data.neededBy)[entryIndex].quantity + incr);
     let newNeededBy = Object.values(data.neededBy);
     newNeededBy.splice(entryIndex, 1);
-    console.log(updatedQty);
-    console.log(newNeededBy);
-    console.log(Object.values(data.neededBy))
     newNeededBy.push({
       name: personName,
       quantity: updatedQty
