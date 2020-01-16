@@ -20,19 +20,28 @@ const Checkout = ({modalState, selected})=>{
 }
 
 const Item = ({item}) =>{
-    console.log(item)
     return (
     <Box color="black">
-        <Title size={5}>{item.productName} for {getNames(item.neededBy)} </Title>
+        <Title size={5}>{item.productName} {getNames(item.neededBy)} </Title>
     </Box>)
 }
 
 const getNames = (array) =>{
-    let my_string = ""
-    for (let i=0; i<array.length; i++){
-        my_string = my_string + " " + array[i].name
+    let my_string = "for"
+    if (array){
+        for (let i=0; i<array.length; i++){
+            if (i==0){
+                my_string = my_string + " " + array[i].name
+            }
+            else{
+                my_string = my_string + ", " + array[i].name
+            }
+        }
+        return(my_string)
     }
-    return(my_string)
+    else{
+        return("")
+    }
 }
 
 export default Checkout
