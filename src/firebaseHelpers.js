@@ -5,7 +5,11 @@ import firebaseConfig from './Config.js';
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database().ref();
 
-const saveItem = ({ name, creator, unit }) => {
+const removeDot = str => {
+  return str.split('.').join("");
+}
+
+const saveItem = ({ name, creator, unit, houseName }) => {
   const id = generateUUID();
   const itemAttrs = { 
     id,
@@ -18,15 +22,12 @@ const saveItem = ({ name, creator, unit }) => {
         quantity: 1
       }
     ]};
-  console.log(name);
-  console.log(creator);
-  db.child('items').child(id).set(itemAttrs)
+  db.child('houses').child(houseName).child('items').child(id).set(itemAttrs)
     .catch(error => alert(error));
 };
 
-const deleteItem = id => {
-  console.log(id)
-  db.child('items').child(id).update({active: false})
+const deleteItem = ( id, houseName ) => {
+  db.child('houses').child(houseName).child('items').child(id).update({active: false})
     .catch(error => alert(error));
 };
 const S4 = () =>{
@@ -38,14 +39,14 @@ const generateUUID = () => {
   return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
 
-const updateItemNumber = (personName, data, incr) => {
+const updateItemNumber = ( personName, data, incr, houseName ) => {
   if (data.neededBy === undefined) {
     data.neededBy = [];
   }
   const entryIndex = Object.values(data.neededBy).findIndex(person => person.name === personName);
   if (entryIndex === -1) {
     if (incr > 0) {
-      db.child('items').child(data.id).update(
+      db.child('houses').child(houseName).child('items').child(data.id).update(
         {
           neededBy: [
             ...Object.values(data.neededBy),
@@ -67,7 +68,7 @@ const updateItemNumber = (personName, data, incr) => {
       quantity: updatedQty
     });
     if (updatedQty > 0) {
-      db.child('items').child(data.id).update(
+      db.child('houses').child(houseName).child('items').child(data.id).update(
         {
           neededBy: newNeededBy
         }
@@ -75,17 +76,96 @@ const updateItemNumber = (personName, data, incr) => {
       .catch(error => alert(error));
     } else if (updatedQty === 0) {
       newNeededBy.pop();
-      db.child('items').child(data.id).update(
+      db.child('houses').child(houseName).child('items').child(data.id).update(
         {
           neededBy: newNeededBy
         }
       )
     }
   }
-}
+};
+
+const createHouse = ({ user, houseName, houseKey }) => {
+  let dbData;
+  db.once("value", function(data) {
+    dbData = data.val();
+
+    if (dbData.houses[houseName] !== undefined) {
+      return -1;
+    };
+    const houseAttrs = { 
+      houseName,
+      houseKey,
+      item: []
+    };
+    db.child('houses').child(houseName).set(houseAttrs)
+      .catch(error => alert(error));
+    
+    // Update user houses
+    let houses = dbData.users[removeDot(user.email)].houses;
+    houses = houses ? Object.values(houses) : [];
+    db.child('users').child(removeDot(user.email)).set({
+      houses: [...houses, houseName]
+    }).catch(error => alert(error));
+  });
+};
+
+const joinHouse = ({ user, houseName, houseKey }) => {
+  let dbData;
+  db.once("value", function(data) {
+    dbData = data.val();
+
+    if (dbData.houses[houseName] === undefined) {
+      return -1;
+    };
+    if (dbData.houses[houseName].houseKey !== houseKey) {
+      return -2;
+    };
+
+    // Update user houses
+    let houses = dbData.users[removeDot(user.email)].houses;
+    houses = houses ? Object.values(houses) : [];
+    db.child('users').child(removeDot(user.email)).update({
+      houses: [...houses, houseName]
+    }).catch(error => alert(error));
+  });
+};
+
+const leaveHouse = ({ user, houseName }) => {
+  let dbData;
+  db.once("value", function(data) {
+    dbData = data.val();
+    let houses = dbData.users[removeDot(user.email)].houses;
+    houses = houses ? Object.values(houses) : [];
+    console.log(houses);
+    console.log(houseName);
+    db.child('users').child(removeDot(user.email)).child('houses').set(
+      houses.filter( house => house !== houseName )
+    ).catch(error => alert(error));
+  });
+};
+
+const createUser = (user) => {
+  let dbData;
+  db.once("value", function(data) {
+    dbData = data.val();
+    if (dbData.users[removeDot(user.email)] === undefined) {
+      db.child('users').child(removeDot(user.email)).set({
+        houses: [],
+        email: removeDot(user.email)
+      }).catch(error => alert(error));
+    }
+  });
+};
+
 export {
   saveItem,
   deleteItem,
   db,
-  updateItemNumber
+  updateItemNumber,
+  createHouse,
+  joinHouse,
+  leaveHouse,
+  createUser,
+  removeDot
 }

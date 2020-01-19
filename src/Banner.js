@@ -14,9 +14,9 @@ import "firebase/database";
 import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
-const Banner = ({ user }) => {
+const Banner = ({ user, house }) => {
   if (user) {
-    return <User user={user} />;
+    return <User user={user} house={house} />;
   } else {
     return <NoUser />;
   }
@@ -46,13 +46,14 @@ const NoUser = () => {
   );
 };
 
-const User = ({ user }) => {
+const User = ({ user, house }) => {
   return (
     <React.Fragment>
       <Block></Block>
       <Column size={8} offset={2}>
         <Notification color="link">
           <Title>{user.displayName}'s OneHouse</Title>
+          <Title size={6}>{house ? `You're in ${house}` : "Enter a house"}</Title>
           <Content>Add items to get started!</Content>
           <Button inverted color="link" primary onClick={() => firebase.auth().signOut()}>
             Log out

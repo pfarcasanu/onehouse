@@ -13,7 +13,7 @@ const useSelection = () => {
   return [ selected, toggle ];
 };
 
-const ListPage = ({propItems, user}) => {
+const ListPage = ({propItems, user, house}) => {
   const [productName, setProductName] = useState("");
   const [unit, setUnit] = useState("");
   const [selected, toggle] = useSelection();
@@ -41,7 +41,9 @@ const ListPage = ({propItems, user}) => {
   }
 
   const handleSubmit = () => {
-    saveItem({ name: productName, unit: unit, creator: user.displayName });
+    saveItem({ name: productName, unit: unit, creator: user.displayName, houseName: house });
+    setProductName("");
+    setUnit("");
   }
   //test github
   if(user){
@@ -55,15 +57,15 @@ const ListPage = ({propItems, user}) => {
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Box>
-                  <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}}/>
+                  <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
                 </Box>
                 <Column size="three-fifths" offset="one-fifth">
                 <Field align="centered" kind="addons">
                     <Control expanded>
-                        <Input size="medium" placeholder="Eggs" onChange={handleProductChange}/>
+                        <Input size="medium" placeholder="Eggs" value={productName} onChange={handleProductChange}/>
                     </Control>
                     <Control expanded>
-                        <Input size="medium" placeholder="1 dozen" onChange={handleUnitChange}/>
+                        <Input size="medium" placeholder="1 dozen" value={unit} onChange={handleUnitChange}/>
                     </Control>
                     <Control>
                         <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>
