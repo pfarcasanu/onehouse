@@ -2,7 +2,10 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import firebaseConfig from './Config.js';
 
+require("firebase/functions");
+
 firebase.initializeApp(firebaseConfig);
+const functions = firebase.functions();
 const db = firebase.database().ref();
 
 const saveItem = ({ name, creator, unit }) => {
@@ -84,6 +87,7 @@ const updateItemNumber = (personName, data, incr) => {
   }
 }
 export {
+  functions,
   saveItem,
   deleteItem,
   db,
