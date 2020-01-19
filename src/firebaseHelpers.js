@@ -2,7 +2,10 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import firebaseConfig from './Config.js';
 
+require("firebase/functions");
+
 firebase.initializeApp(firebaseConfig);
+const functions = firebase.functions();
 const db = firebase.database().ref();
 
 const removeDot = str => {
@@ -159,6 +162,7 @@ const createUser = (user) => {
 };
 
 export {
+  functions,
   saveItem,
   deleteItem,
   db,
