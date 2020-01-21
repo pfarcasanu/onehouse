@@ -195,19 +195,6 @@ const HouseOptions = ({ house, setHouse, user, housesData, usersData }) => {
             Leave House
           </Button>
         </Button.Group>
-        <Title size={5}>Your houses</Title>
-        <Button.Group align="centered">
-          {(userHouses)
-            ? userHouses.map(houseName => (
-              <Button
-                onClick={() => setHouse(houseName)}
-                disabled={house === houseName}
-              >
-                {houseName}
-              </Button>
-            ))
-            : ""}
-        </Button.Group>
       </React.Fragment>
     );
   } else {

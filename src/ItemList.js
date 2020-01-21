@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Message, Delete, Table ,Button, Column} from "rbx";
+import { Checkbox, Message, Delete, Table ,Button, Column} from "rbx";
 import {deleteItem,updateItemNumber} from './firebaseHelpers';
 
 const ItemList = ({ items, user, shopMode, selectedState, house }) => {
@@ -9,10 +9,9 @@ const ItemList = ({ items, user, shopMode, selectedState, house }) => {
         <Table.Head>
           <Table.Row>
             <Table.Heading>
-              Product Name
             </Table.Heading>
             <Table.Heading>
-              Unit
+              Product
             </Table.Heading>
             <Table.Heading>
               Needed by
@@ -27,12 +26,14 @@ const ItemList = ({ items, user, shopMode, selectedState, house }) => {
         </Table.Head>
         <Table.Body>
           {items.map(data =>
-              <Table.Row key={data.id}>
+              <Table.Row active key={data.id}>
                 <Table.Cell>
-                  {data.productName}
+                  <Checkbox
+                    onClick={() => selectedState.toggle(data.id)}
+                  />
                 </Table.Cell>
                 <Table.Cell>
-                  {data.unit}
+                  {data.productName} ({data.unit})
                 </Table.Cell>
                 <Table.Cell>
                   {!!data.neededBy ? Object.values(data.neededBy).map(person => (
@@ -60,15 +61,7 @@ const ItemList = ({ items, user, shopMode, selectedState, house }) => {
                   </Button>
                 </Table.Cell>
                 <Table.Cell className="align-right">
-                  {
-                    shopMode ? 
-                    <Button onClick={() => selectedState.toggle(data.id)}
-                    color={buttonColor(selectedState.selected.includes(data.id))}
-                    >
-                      Purchase
-                    </Button>
-                    : <Delete as="button" onClick={() => deleteItem(data.id, house)}/>
-                  }
+                  <Delete as="button" onClick={() => deleteItem(data.id, house)}/>
                 </Table.Cell>
               </Table.Row>)
           } 

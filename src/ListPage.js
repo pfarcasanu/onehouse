@@ -49,10 +49,6 @@ const ListPage = ({propItems, user, house}) => {
   if(user){
   return (
     <Container>
-      <Checkout modalState={{modalState, setModalState}} selected={propItems.filter(item=> selected.includes(item.id))}/>
-      <Button size="large" color="link" outlined onClick={()=>shopModeOnClick()}>
-        {shopMode ? "Check Out" : "Enter Shopping Mode"}
-      </Button>
       <Block/>
         <ColumnGroup>
             <Column size={10} offset={1}>
@@ -65,7 +61,7 @@ const ListPage = ({propItems, user, house}) => {
                         <Input size="medium" placeholder="Eggs" value={productName} onChange={handleProductChange}/>
                     </Control>
                     <Control expanded>
-                        <Input size="medium" placeholder="1 dozen" value={unit} onChange={handleUnitChange}/>
+                        <Input size="medium" placeholder="dozen" value={unit} onChange={handleUnitChange}/>
                     </Control>
                     <Control>
                         <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>
