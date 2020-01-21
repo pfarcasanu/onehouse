@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Message, Delete, Table ,Button, Column} from "rbx";
 import {deleteItem,updateItemNumber} from './firebaseHelpers';
 
-const ItemList = ({ items, user, shopMode, selectedState }) => {
+const ItemList = ({ items, user, shopMode, selectedState, house }) => {
     const buttonColor = selected => (selected ? 'info' : null);
     return (
       <Table fullwidth hoverable>
@@ -46,7 +46,7 @@ const ItemList = ({ items, user, shopMode, selectedState }) => {
                   <Button 
                     disabled={!data.neededBy}
                     size="small"
-                    onClick={()=>updateItemNumber(user.displayName,data,-1)}>
+                    onClick={()=>updateItemNumber(user.displayName, data, -1, house)}>
                     -
                   </Button>
                 </Table.Cell>
@@ -55,7 +55,7 @@ const ItemList = ({ items, user, shopMode, selectedState }) => {
                     total + person.quantity
                   ), 0) : 0}</Table.Cell>
                 <Table.Cell className="thin-col">
-                  <Button size="small" onClick={()=>updateItemNumber(user.displayName,data,1)}>
+                  <Button size="small" onClick={()=>updateItemNumber(user.displayName, data, 1, house)}>
                     +
                   </Button>
                 </Table.Cell>
@@ -67,7 +67,7 @@ const ItemList = ({ items, user, shopMode, selectedState }) => {
                     >
                       Purchase
                     </Button>
-                    : <Delete as="button" onClick={() => deleteItem(data.id)}/>
+                    : <Delete as="button" onClick={() => deleteItem(data.id, house)}/>
                   }
                 </Table.Cell>
               </Table.Row>)
