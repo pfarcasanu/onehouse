@@ -53,9 +53,16 @@ const User = ({ user, house }) => {
       <Column size={8} offset={2}>
         <Notification color="link">
           <Title>{user.displayName}'s OneHouse</Title>
-          <Title size={6}>{house ? `You're in ${house}` : "Enter a house"}</Title>
+          <Title size={6}>
+            {house ? `You're in ${house}` : "Enter a house"}
+          </Title>
           <Content>Add items to get started!</Content>
-          <Button inverted color="link" primary onClick={() => firebase.auth().signOut()}>
+          <Button
+            inverted
+            color="link"
+            primary
+            onClick={() => firebase.auth().signOut()}
+          >
             Log out
           </Button>
         </Notification>
