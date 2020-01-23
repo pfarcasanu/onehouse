@@ -25,11 +25,6 @@ const Banner = ({ user, house }) => {
       <Navbar.Menu>
         <Navbar.Segment align="start">
           <Navbar.Item>
-            <b>OneHouse</b>
-          </Navbar.Item>
-        </Navbar.Segment>
-        <Navbar.Segment align="start">
-          <Navbar.Item>
             {house ? house : ""}
           </Navbar.Item>
         </Navbar.Segment>
