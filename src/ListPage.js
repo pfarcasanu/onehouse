@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { Container, Button, Input, Box, Column, Block, Field, Control, Title } from "rbx";
+import { Container, Button, Input, Box, Column, Block, Field, Control, Heading } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
@@ -46,38 +46,49 @@ const ListPage = ({propItems, user, house}) => {
     setUnit("");
   }
 
-  if (user) {
+  if (user && house){
+  return (
+    <Container>
+        <ColumnGroup>
+            <Column size={10} offset={1}>
+                <Block/>
+                <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
+                {selected.length === 0 ? <div/> :
+                <Button color='info'>
+                  Attach To Receipt 
+                </Button>}
+                <Block/>
+                <Column size="three-fifths" offset="one-fifth">
+                <Field align="centered" kind="addons">
+                    <Control expanded>
+                        <Input size="medium" placeholder="Eggs" value={productName} onChange={handleProductChange}/>
+                    </Control>
+                    <Control expanded>
+                        <Input size="medium" placeholder="dozen" value={unit} onChange={handleUnitChange}/>
+                    </Control>
+                    <Control>
+                        <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>
+                    </Control>
+                </Field>
+                </Column>
+            </Column>
+        </ColumnGroup>
+    </Container>
+  )}
+  else if (user){
     return (
-      <Container>
-          <ColumnGroup>
-              <Column size={10} offset={1}>
-                  <Block/>
-                  <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
-                  {selected.length === 0 ? <div/> :
-                  <Button color='info'>
-                    Attach To Receipt 
-                  </Button>}
-                  <Block/>
-                  <Column size="three-fifths" offset="one-fifth">
-                  <Field align="centered" kind="addons">
-                      <Control expanded>
-                          <Input size="medium" placeholder="Eggs" value={productName} onChange={handleProductChange}/>
-                      </Control>
-                      <Control expanded>
-                          <Input size="medium" placeholder="dozen" value={unit} onChange={handleUnitChange}/>
-                      </Control>
-                      <Control>
-                          <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>
-                      </Control>
-                  </Field>
-                  </Column>
-              </Column>
-          </ColumnGroup>
-      </Container>
-    )}
-    else return(
-      <div>Please Login</div>
+      <Heading className="medium-font">
+        join or create a house to continue
+      </Heading>
     )
+  }
+  else {
+    return (
+      <Heading className="medium-font">
+        sign in to continue
+      </Heading>
+    )
+  }
 
 }
 

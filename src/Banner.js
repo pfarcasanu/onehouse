@@ -3,6 +3,8 @@ import "rbx/index.css";
 import {
   Navbar,
   Button,
+  Heading,
+  Title,
 } from "rbx";
 import firebase from "firebase/app";
 import "firebase/database";
@@ -12,15 +14,18 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 const Banner = ({ user, house }) => {
   return (
     <Navbar color='info'>
+      <Navbar.Brand>
+        <Navbar.Item>
+          <Heading className='medium-font'>
+            {!user ? "OneHouse" : user.displayName + "'s OneHouse"}
+          </Heading>
+        </Navbar.Item>
+        <Navbar.Burger />
+      </Navbar.Brand>
       <Navbar.Menu>
         <Navbar.Segment align="start">
           <Navbar.Item>
             <b>OneHouse</b>
-          </Navbar.Item>
-        </Navbar.Segment>
-        <Navbar.Segment align="start">
-          <Navbar.Item>
-            {user ? user.displayName : ""}
           </Navbar.Item>
         </Navbar.Segment>
         <Navbar.Segment align="start">

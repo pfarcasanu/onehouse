@@ -7,7 +7,7 @@ import ListPage from "./ListPage";
 import HouseOptions from "./HouseOptions";
 import Banner from "./Banner";
 import { db, createUser } from "./firebaseHelpers";
-import { Block } from "rbx";
+import { Block, Box, Heading} from "rbx";
 
 const createItemList = (dbData, house) => {
   let items = dbData.houses[house].items;
