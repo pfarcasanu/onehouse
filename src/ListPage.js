@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { Container, Button, Input, Box, Column, Block, Field, Control, Title } from "rbx";
+import { Container, Button, Input, Box, Column, Block, Field, Control, Heading } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
@@ -46,26 +46,27 @@ const ListPage = ({propItems, user, house}) => {
     setUnit("");
   }
   //test github
-  if(user){
+  if(user && house){
   return (
     <Container>
-      <Checkout modalState={{modalState, setModalState}} selected={propItems.filter(item=> selected.includes(item.id))}/>
-      <Button size="large" color="link" outlined onClick={()=>shopModeOnClick()}>
-        {shopMode ? "Check Out" : "Enter Shopping Mode"}
-      </Button>
-      <Block/>
         <ColumnGroup>
             <Column size={10} offset={1}>
+                <Block/>
                 <Box>
                   <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
                 </Box>
+                {selected.length === 0 ? <div/> :
+                <Button color='info'>
+                  Attach To Receipt 
+                </Button>}
+                <Block/>
                 <Column size="three-fifths" offset="one-fifth">
                 <Field align="centered" kind="addons">
                     <Control expanded>
                         <Input size="medium" placeholder="Eggs" value={productName} onChange={handleProductChange}/>
                     </Control>
                     <Control expanded>
-                        <Input size="medium" placeholder="1 dozen" value={unit} onChange={handleUnitChange}/>
+                        <Input size="medium" placeholder="dozen" value={unit} onChange={handleUnitChange}/>
                     </Control>
                     <Control>
                         <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>
@@ -76,9 +77,20 @@ const ListPage = ({propItems, user, house}) => {
         </ColumnGroup>
     </Container>
   )}
-  else return(
-    <div>Please Login</div>
-  )
+  else if (user){
+    return (
+      <Heading className="medium-font">
+        join or create a house to continue
+      </Heading>
+    )
+  }
+  else {
+    return (
+      <Heading className="medium-font">
+        sign in to continue
+      </Heading>
+    )
+  }
 
 }
 

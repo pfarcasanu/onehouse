@@ -1,13 +1,10 @@
 import React, { Component, useState } from "react";
 import "rbx/index.css";
 import {
-  Notification,
-  Title,
-  Content,
-  Block,
-  Message,
+  Navbar,
   Button,
-  Column
+  Heading,
+  Title,
 } from "rbx";
 import firebase from "firebase/app";
 import "firebase/database";
@@ -15,11 +12,26 @@ import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 const Banner = ({ user, house }) => {
-  if (user) {
-    return <User user={user} house={house} />;
-  } else {
-    return <NoUser />;
-  }
+  return (
+    <Navbar color='info'>
+      <Navbar.Brand>
+        <Navbar.Item>
+          <Heading className='medium-font'>
+            {!user ? "OneHouse" : user.displayName + "'s OneHouse"}
+          </Heading>
+        </Navbar.Item>
+        <Navbar.Burger />
+      </Navbar.Brand>
+      <Navbar.Menu>
+        <Navbar.Segment align="end">
+          <Navbar.Item>
+            {!user ? <SignIn/> :
+            <Logout user={user} house={house}/>}
+          </Navbar.Item>
+        </Navbar.Segment>
+      </Navbar.Menu>
+    </Navbar>
+  );
 };
 
 const uiConfig = {
@@ -30,45 +42,15 @@ const uiConfig = {
   }
 };
 
-const NoUser = () => {
+const Logout = ({ user, house }) => {
   return (
-    <React.Fragment>
-      <Block></Block>
-      <Column size={8} offset={2}>
-        <Notification color="link">
-          <Title>OneHouse</Title>
-          <Content>The best way to shop for your home!</Content>
-          <SignIn />
-        </Notification>
-      </Column>
-      <Block></Block>
-    </React.Fragment>
-  );
-};
-
-const User = ({ user, house }) => {
-  return (
-    <React.Fragment>
-      <Block></Block>
-      <Column size={8} offset={2}>
-        <Notification color="link">
-          <Title>{user.displayName}'s OneHouse</Title>
-          <Title size={6}>
-            {house ? `You're in ${house}` : "Enter a house"}
-          </Title>
-          <Content>Add items to get started!</Content>
-          <Button
-            inverted
-            color="link"
-            primary
-            onClick={() => firebase.auth().signOut()}
-          >
-            Log out
-          </Button>
-        </Notification>
-      </Column>
-      <Block></Block>
-    </React.Fragment>
+    <Button
+      color="primary"
+      primary
+      onClick={() => firebase.auth().signOut()}
+    >
+      Log out
+    </Button>
   );
 };
 
