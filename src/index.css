@@ -33,3 +33,7 @@ code {
 .white {
   color: white !important;
 }
+
+.medium-font {
+  font-size: medium !important;
+}

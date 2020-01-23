@@ -7,7 +7,7 @@ import ListPage from "./ListPage";
 import HouseOptions from "./HouseOptions";
 import Banner from "./Banner";
 import { db, createUser } from "./firebaseHelpers";
-import { Block } from "rbx";
+import { Block, Box, Heading} from "rbx";
 
 const createItemList = (dbData, house) => {
   let items = dbData.houses[house].items;
@@ -53,7 +53,13 @@ function App() {
       <Banner user={user} house={house} />
       <Block/>
       <HouseOptions house={house} setHouse={setHouse} user={user} housesData={housesData} usersData={usersData} />
+      {!house ? 
+
+      <Heading className='medium-font'>
+        Please Create or Join a House to Continue
+      </Heading> : 
       <ListPage propItems={items} user={user} house={house} />
+      }
     </div>
   );
 }
