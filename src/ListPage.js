@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { Container, Button, Input, Box, Column, Block, Field, Control, Title } from "rbx";
+import { Container, Button, Input, Box, Column, Block, Field, Control, Heading } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
@@ -46,7 +46,7 @@ const ListPage = ({propItems, user, house}) => {
     setUnit("");
   }
   //test github
-  if(user){
+  if(user && house){
   return (
     <Container>
         <ColumnGroup>
@@ -77,9 +77,20 @@ const ListPage = ({propItems, user, house}) => {
         </ColumnGroup>
     </Container>
   )}
-  else return(
-    <div>Please Login</div>
-  )
+  else if (user){
+    return (
+      <Heading className="medium-font">
+        join or create a house to continue
+      </Heading>
+    )
+  }
+  else {
+    return (
+      <Heading className="medium-font">
+        sign in to continue
+      </Heading>
+    )
+  }
 
 }
 

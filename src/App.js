@@ -53,13 +53,7 @@ function App() {
       <Banner user={user} house={house} />
       <Block/>
       <HouseOptions house={house} setHouse={setHouse} user={user} housesData={housesData} usersData={usersData} />
-      {!house ? 
-
-      <Heading className='medium-font'>
-        Please Create or Join a House to Continue
-      </Heading> : 
       <ListPage propItems={items} user={user} house={house} />
-      }
     </div>
   );
 }
