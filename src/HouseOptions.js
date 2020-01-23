@@ -1,40 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   createHouse,
   joinHouse,
-  leaveHouse,
-  removeDot,
-  db
+  leaveHouse
 } from "./firebaseHelpers";
 import { Button, Modal, Field, Control, Input, Label, Title } from "rbx";
 
 const CreateHouseModal = ({ modalState, user, setHouse, housesData }) => {
   const [houseName, setHouseName] = useState("");
-  const [houseKey, setHouseKey] = useState("");
-  const [houseExists, setHouseExists] = useState(false);
+  const [housePassword, sethousePassword] = useState("");
 
   const handleNameChange = event => {
     setHouseName(event.target.value);
-
-    setHouseExists(false);
   };
 
-  const handleKeyChange = event => {
-    setHouseKey(event.target.value);
+  const handlePasswordChange = event => {
+    sethousePassword(event.target.value);
   };
 
   const handleSubmit = () => {
-    if (housesData) {
-      let houses = Object.values(housesData);
-      let isExist = houses.filter(x => x.houseName === houseName);
-      if (isExist.length > 0) {
-        alert("House name exists!")
-      }
-      else {
-        modalState.setModalState(false);
-        createHouse({ user, houseName, houseKey, setHouseExists, setHouse });
-        setHouse(houseName)
-      }
+    if (housesData && housesData[houseName] !== undefined) {
+      alert("House name exists!")
+    }
+    else {
+      modalState.setModalState(false);
+      createHouse({ user, houseName, housePassword });
+      setHouse(houseName)
     }
   }
 
@@ -49,13 +40,12 @@ const CreateHouseModal = ({ modalState, user, setHouse, housesData }) => {
             <Input size="medium" onChange={handleNameChange} />
           </Control>
           <div>
-            {houseExists ? "House name already exists" : ""}
           </div>
         </Field>
         <Field>
-          <Label className="white">House Key</Label>
+          <Label className="white">House Password</Label>
           <Control expanded>
-            <Input size="medium" onChange={handleKeyChange} />
+            <Input size="medium" type="password" onChange={handlePasswordChange} />
           </Control>
         </Field>
         <Field>
@@ -74,32 +64,30 @@ const CreateHouseModal = ({ modalState, user, setHouse, housesData }) => {
   );
 };
 
-const JoinHouseModal = ({ modalState, user, setHouse, housesData, usersData }) => {
+const JoinHouseModal = ({ modalState, user, setHouse, housesData }) => {
   const [houseName, setHouseName] = useState("");
-  const [houseKey, setHouseKey] = useState("");
-  const [houseExists, setHouseExists] = useState(true);
-  const [keyMatches, setKeyMatches] = useState(true);
+  const [housePassword, sethousePassword] = useState("");
+
   const handleNameChange = event => {
     setHouseName(event.target.value);
-    setHouseExists(true);
   };
 
-  const handleKeyChange = event => {
-    setHouseKey(event.target.value);
+  const handlePasswordChange = event => {
+    sethousePassword(event.target.value);
   };
 
   const handleSubmit = () => {
     if (housesData) {
       let houses = Object.values(housesData);
-      let keyMatch = houses.map(x => {
-        return (x.houseKey === houseKey && x.houseName === houseName) ? 1 : -1;
-      })
-      if (keyMatch.includes(1)) {
+      const house = houses.filter(x => {
+        return (x.housePassword === housePassword && x.houseName === houseName);
+      })[0];
+      if (house !== undefined) {
         modalState.setModalState(false);
-        joinHouse(user, houseName, usersData);
+        joinHouse(user, houseName);
         setHouse(houseName);
       } else {
-        alert("Incorrect key or house name")
+        alert("Incorrect password or house name")
       }
     }
   };
@@ -116,16 +104,15 @@ const JoinHouseModal = ({ modalState, user, setHouse, housesData, usersData }) =
           </Control>
         </Field>
         <Field>
-          <Label className="white">House Key</Label>
+          <Label className="white">House Password</Label>
           <Control expanded>
-            <Input size="medium" onChange={handleKeyChange} />
+            <Input size="medium" type="password" onChange={handlePasswordChange} />
           </Control>
-          {keyMatches && houseExists ? "" : "House key is not correct"}
         </Field>
         <Field>
           <Control>
             <Button size="medium" color="link" onClick={handleSubmit}>
-              Add
+              Join
             </Button>
           </Control>
         </Field>
@@ -134,30 +121,9 @@ const JoinHouseModal = ({ modalState, user, setHouse, housesData, usersData }) =
   );
 };
 
-const getUserHouses = (dbData, user) => {
-  const userData = dbData.users[removeDot(user.email)];
-  if (!userData) {
-    return [];
-  }
-  const houses = dbData.users[removeDot(user.email)].houses;
-  return houses ? [...new Set(Object.values(houses))] : [];
-};
-
 const HouseOptions = ({ house, setHouse, user, housesData, usersData }) => {
   const [createModalState, setCreateModalState] = useState(false);
   const [joinModalState, setJoinModalState] = useState(false);
-  const [userHouses, setUserHouses] = useState([]);
-  useEffect(() => {
-    const handleData = snap => {
-      if (snap.val() && user) {
-        setUserHouses(getUserHouses(snap.val(), user));
-      }
-    };
-    db.on("value", handleData, error => alert(error));
-    return () => {
-      db.off("value", handleData);
-    };
-  }, [user]);
 
   if (user) {
     return (
@@ -182,15 +148,24 @@ const HouseOptions = ({ house, setHouse, user, housesData, usersData }) => {
           usersData={usersData}
         />
         <Button.Group align="centered">
-          <Button onClick={() => setCreateModalState(true)}>
+          <Button
+            onClick={() => setCreateModalState(true)}
+            disabled={house !== undefined}
+          >
             Create House
           </Button>
-          <Button onClick={() => setJoinModalState(true)}>Join House</Button>
+          <Button
+            onClick={() => setJoinModalState(true)}
+            disabled={house !== undefined}
+          >
+            Join House
+          </Button>
           <Button
             onClick={() => {
-              leaveHouse({ user, houseName: house });
-              setHouse("");
+              leaveHouse(user, setHouse);
+              setHouse(undefined);
             }}
+            disabled={house === undefined}
           >
             Leave House
           </Button>

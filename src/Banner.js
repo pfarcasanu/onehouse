@@ -12,19 +12,22 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 const Banner = ({ user, house }) => {
   return (
     <Navbar color='info'>
-      <Navbar.Brand>
-        <Navbar.Item href="#">
-          <img
-            src="https://bulma.io/images/bulma-logo.png"
-            alt=""
-            role="presentation"
-            width="112"
-            height="28"
-          />
-        </Navbar.Item>
-        <Navbar.Burger />
-      </Navbar.Brand>
       <Navbar.Menu>
+        <Navbar.Segment align="start">
+          <Navbar.Item>
+            <b>OneHouse</b>
+          </Navbar.Item>
+        </Navbar.Segment>
+        <Navbar.Segment align="start">
+          <Navbar.Item>
+            {user ? user.displayName : ""}
+          </Navbar.Item>
+        </Navbar.Segment>
+        <Navbar.Segment align="start">
+          <Navbar.Item>
+            {house ? house : ""}
+          </Navbar.Item>
+        </Navbar.Segment>
         <Navbar.Segment align="end">
           <Navbar.Item>
             {!user ? <SignIn/> :
@@ -48,7 +51,6 @@ const Logout = ({ user, house }) => {
   return (
     <Button
       color="primary"
-      primary
       onClick={() => firebase.auth().signOut()}
     >
       Log out

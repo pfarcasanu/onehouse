@@ -1,19 +1,23 @@
-import React, { } from "react";
-import { Checkbox, Delete, Table ,Button } from "rbx";
-import {deleteItem,updateItemNumber} from './firebaseHelpers';
+import React from "react";
+import { Checkbox, Delete, Table, Button, Box } from "rbx";
+import { deleteItem, updateItemNumber } from './firebaseHelpers';
 
-const ItemList = ({ items, user, shopMode, selectedState, house }) => {
-    return (
+const ItemList = ({ items, user, selectedState, house }) => {
+  if (items.length === 0) {
+    return (<React.Fragment></React.Fragment>);
+  }
+  return (
+    <Box>
       <Table fullwidth hoverable>
         <Table.Head>
           <Table.Row>
             <Table.Heading>
             </Table.Heading>
             <Table.Heading>
-              Product
+              Product (unit)
             </Table.Heading>
             <Table.Heading>
-              Needed by
+              Needed by (quantity)
             </Table.Heading>
             <Table.Heading colSpan="3">
               Quantity
@@ -23,18 +27,18 @@ const ItemList = ({ items, user, shopMode, selectedState, house }) => {
             </Table.Heading>
           </Table.Row>
         </Table.Head>
-        <Table.Body>
+        <Table.Body >
           {items.map(data =>
-              <Table.Row active key={data.id}>
+              <Table.Row key={data.productName}>
                 <Table.Cell>
-                  <Checkbox onClick={() => selectedState.toggle(data.id)}/>
+                  <Checkbox onClick={() => selectedState.toggle(data.productName)}/>
                 </Table.Cell>
                 <Table.Cell>
                   {data.productName} ({data.unit})
                 </Table.Cell>
                 <Table.Cell>
                   {!!data.neededBy ? Object.values(data.neededBy).map(person => (
-                    <React.Fragment key={`${data.id}-${person.name}`}>
+                    <React.Fragment key={`${data.productName}-${person.name}`}>
                       {person.name} ({person.quantity})
                       <br />
                     </React.Fragment>
@@ -58,13 +62,14 @@ const ItemList = ({ items, user, shopMode, selectedState, house }) => {
                   </Button>
                 </Table.Cell>
                 <Table.Cell className="align-right">
-                  <Delete as="button" onClick={() => deleteItem(data.id, house)}/>
+                  <Delete as="button" onClick={() => deleteItem(data.productName, house)}/>
                 </Table.Cell>
               </Table.Row>)
           } 
         </Table.Body>
       </Table>
-    )
+    </Box>
+  );
 }
 
 export default ItemList;

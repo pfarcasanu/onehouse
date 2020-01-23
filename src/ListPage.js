@@ -45,41 +45,39 @@ const ListPage = ({propItems, user, house}) => {
     setProductName("");
     setUnit("");
   }
-  //test github
-  if(user){
-  return (
-    <Container>
-        <ColumnGroup>
-            <Column size={10} offset={1}>
-                <Block/>
-                <Box>
+
+  if (user) {
+    return (
+      <Container>
+          <ColumnGroup>
+              <Column size={10} offset={1}>
+                  <Block/>
                   <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
-                </Box>
-                {selected.length === 0 ? <div/> :
-                <Button color='info'>
-                  Attach To Receipt 
-                </Button>}
-                <Block/>
-                <Column size="three-fifths" offset="one-fifth">
-                <Field align="centered" kind="addons">
-                    <Control expanded>
-                        <Input size="medium" placeholder="Eggs" value={productName} onChange={handleProductChange}/>
-                    </Control>
-                    <Control expanded>
-                        <Input size="medium" placeholder="dozen" value={unit} onChange={handleUnitChange}/>
-                    </Control>
-                    <Control>
-                        <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>
-                    </Control>
-                </Field>
-                </Column>
-            </Column>
-        </ColumnGroup>
-    </Container>
-  )}
-  else return(
-    <div>Please Login</div>
-  )
+                  {selected.length === 0 ? <div/> :
+                  <Button color='info'>
+                    Attach To Receipt 
+                  </Button>}
+                  <Block/>
+                  <Column size="three-fifths" offset="one-fifth">
+                  <Field align="centered" kind="addons">
+                      <Control expanded>
+                          <Input size="medium" placeholder="Eggs" value={productName} onChange={handleProductChange}/>
+                      </Control>
+                      <Control expanded>
+                          <Input size="medium" placeholder="dozen" value={unit} onChange={handleUnitChange}/>
+                      </Control>
+                      <Control>
+                          <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>
+                      </Control>
+                  </Field>
+                  </Column>
+              </Column>
+          </ColumnGroup>
+      </Container>
+    )}
+    else return(
+      <div>Please Login</div>
+    )
 
 }
 
