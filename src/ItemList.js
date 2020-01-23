@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Checkbox, Message, Delete, Table ,Button, Column} from "rbx";
+import React, { } from "react";
+import { Checkbox, Delete, Table ,Button } from "rbx";
 import {deleteItem,updateItemNumber} from './firebaseHelpers';
 
 const ItemList = ({ items, user, shopMode, selectedState, house }) => {
-    const buttonColor = selected => (selected ? 'info' : null);
     return (
       <Table fullwidth hoverable>
         <Table.Head>
@@ -28,9 +27,7 @@ const ItemList = ({ items, user, shopMode, selectedState, house }) => {
           {items.map(data =>
               <Table.Row active key={data.id}>
                 <Table.Cell>
-                  <Checkbox
-                    onClick={() => selectedState.toggle(data.id)}
-                  />
+                  <Checkbox onClick={() => selectedState.toggle(data.id)}/>
                 </Table.Cell>
                 <Table.Cell>
                   {data.productName} ({data.unit})

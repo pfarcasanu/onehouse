@@ -49,12 +49,17 @@ const ListPage = ({propItems, user, house}) => {
   if(user){
   return (
     <Container>
-      <Block/>
         <ColumnGroup>
             <Column size={10} offset={1}>
+                <Block/>
                 <Box>
                   <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
                 </Box>
+                {selected.length === 0 ? <div/> :
+                <Button color='info'>
+                  Attach To Receipt 
+                </Button>}
+                <Block/>
                 <Column size="three-fifths" offset="one-fifth">
                 <Field align="centered" kind="addons">
                     <Control expanded>

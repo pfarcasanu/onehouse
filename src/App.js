@@ -7,6 +7,7 @@ import ListPage from "./ListPage";
 import HouseOptions from "./HouseOptions";
 import Banner from "./Banner";
 import { db, createUser } from "./firebaseHelpers";
+import { Block } from "rbx";
 
 const createItemList = (dbData, house) => {
   let items = dbData.houses[house].items;
@@ -50,6 +51,7 @@ function App() {
   return (
     <div className="App">
       <Banner user={user} house={house} />
+      <Block/>
       <HouseOptions house={house} setHouse={setHouse} user={user} housesData={housesData} usersData={usersData} />
       <ListPage propItems={items} user={user} house={house} />
     </div>
