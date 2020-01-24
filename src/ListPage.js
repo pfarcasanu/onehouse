@@ -45,16 +45,14 @@ const ListPage = ({propItems, user, house}) => {
     setProductName("");
     setUnit("");
   }
-  //test github
-  if(user && house){
+
+  if (user && house){
   return (
     <Container>
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Block/>
-                <Box>
-                  <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
-                </Box>
+                <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
                 {selected.length === 0 ? <div/> :
                 <Button color='info'>
                   Attach To Receipt 

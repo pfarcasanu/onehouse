@@ -12,27 +12,30 @@ import { Block, Box, Heading} from "rbx";
 const createItemList = (dbData, house) => {
   let items = dbData.houses[house].items;
   items = items ? Object.values(items) : [];
-  return items.filter(item => item.active);
+  return items.filter(item => item.visible);
 };
 
 function App() {
   const [items, setItems] = useState([]);
-  const [user, setUser] = useState(null);
-  const [house, setHouse] = useState(null);
+  const [user, setUser] = useState(undefined);
+  const [house, setHouse] = useState(undefined);
   const [housesData, setHousesData] = useState([]);
   const [usersData, setUsersData] = useState([]);
+
   useEffect(() => {
     const handleData = snap => {
       if (snap.val()) {
-        setHousesData(Object.values(snap.val())[0]);
-        setUsersData(Object.values(snap.val())[2]);
+        setHousesData(snap.val().houses);
+        setUsersData(snap.val().users);
         if (house) {
           if (snap.val().houses[house] !== undefined) {
             setItems(createItemList(snap.val(), house));
           } else {
             alert("wrong house name");
-            setHouse("");
+            setHouse(undefined);
           }
+        } else {
+          setItems([]);
         }
       }
     };
@@ -40,14 +43,23 @@ function App() {
     return () => {
       db.off("value", handleData);
     };
-  }, [house]);
+  }, [house, user]);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
     if (user) {
-      createUser(user);
+      createUser(user, usersData);
     }
-  }, [user]);
+  }, [user, usersData]);
+
+  useEffect(() => {
+    if (user && usersData[user.uid] && usersData[user.uid].house) {
+      setHouse(usersData[user.uid].house);
+    } else {
+      setHouse(undefined);
+    }
+  }, [usersData, user]);
+
   return (
     <div className="App">
       <Banner user={user} house={house} />
