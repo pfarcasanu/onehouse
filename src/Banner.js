@@ -1,10 +1,9 @@
-import React, { Component, useState } from "react";
+import React, { } from "react";
 import "rbx/index.css";
 import {
   Navbar,
   Button,
   Heading,
-  Title,
 } from "rbx";
 import firebase from "firebase/app";
 import "firebase/database";

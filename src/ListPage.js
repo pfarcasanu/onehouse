@@ -1,9 +1,8 @@
-import React, { useState, useEffect} from 'react';
-import { Container, Button, Input, Box, Column, Block, Field, Control, Heading } from "rbx";
+import React, { useState } from 'react';
+import { Container, Button, Input, Column, Block, Field, Control, Heading } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
-import Checkout from './Checkout'
 
 const useSelection = () => {
   const [selected, setSelected] = useState([]);
@@ -17,20 +16,6 @@ const ListPage = ({propItems, user, house}) => {
   const [productName, setProductName] = useState("");
   const [unit, setUnit] = useState("");
   const [selected, toggle] = useSelection();
-  const [shopMode, setShopMode] = useState(false);
-  const [modalState, setModalState] = useState(false);
-
-  const shopModeOnClick = () => {
-    if (!shopMode){
-      setShopMode(true);
-      return;
-    }
-    setShopMode(false);
-    if (selected.length === 0) return;
-    else{
-      setModalState(true);
-    }
-  };
 
   const handleProductChange = (event) => {
     setProductName(event.target.value);
@@ -52,7 +37,7 @@ const ListPage = ({propItems, user, house}) => {
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Block/>
-                <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
+                <ItemList items={propItems} user={user} selectedState={{selected, toggle}} house={house} />
                 {selected.length === 0 ? <div/> :
                 <Button color='info'>
                   Attach To Receipt 
