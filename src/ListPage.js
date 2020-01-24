@@ -3,6 +3,7 @@ import { Container, Button, Input, Column, Block, Field, Control, Heading } from
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
+import ReceiptModal from './ReceiptModal';
 
 const useSelection = () => {
   const [selected, setSelected] = useState([]);
@@ -16,6 +17,7 @@ const ListPage = ({propItems, user, house}) => {
   const [productName, setProductName] = useState("");
   const [unit, setUnit] = useState("");
   const [selected, toggle] = useSelection();
+  const [attachReceipt, setAttachReceipt] = useState(false);
 
   const handleProductChange = (event) => {
     setProductName(event.target.value);
@@ -34,12 +36,13 @@ const ListPage = ({propItems, user, house}) => {
   if (user && house){
   return (
     <Container>
+        <ReceiptModal selected={selected} modalState={{attachReceipt, setAttachReceipt}}/>
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Block/>
                 <ItemList items={propItems} user={user} selectedState={{selected, toggle}} house={house} />
                 {selected.length === 0 ? <div/> :
-                <Button color='info'>
+                <Button color='info' onClick={() => setAttachReceipt(true)}>
                   Attach To Receipt 
                 </Button>}
                 <Block/>

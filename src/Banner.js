@@ -3,7 +3,7 @@ import "rbx/index.css";
 import {
   Navbar,
   Button,
-  Heading,
+  Content,
 } from "rbx";
 import firebase from "firebase/app";
 import "firebase/database";
@@ -15,16 +15,16 @@ const Banner = ({ user, house }) => {
     <Navbar color='info'>
       <Navbar.Brand>
         <Navbar.Item>
-          <Heading className='medium-font'>
+          <Content className='medium-font'>
             {!user ? "OneHouse" : user.displayName + "'s OneHouse"}
-          </Heading>
+          </Content>
         </Navbar.Item>
         <Navbar.Burger />
       </Navbar.Brand>
       <Navbar.Menu>
         <Navbar.Segment align="start">
           <Navbar.Item>
-            {house ? house : ""}
+            <Content>{house ? house : ""}</Content>
           </Navbar.Item>
         </Navbar.Segment>
         <Navbar.Segment align="end">

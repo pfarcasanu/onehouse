@@ -31,7 +31,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
           {items.map(data =>
               <Table.Row key={data.productName}>
                 <Table.Cell>
-                  <Checkbox onClick={() => selectedState.toggle(data.productName)}/>
+                  <Checkbox onClick={() => selectedState.toggle(data)}/>
                 </Table.Cell>
                 <Table.Cell>
                   {data.productName} ({data.unit})
