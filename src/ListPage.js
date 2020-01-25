@@ -1,36 +1,28 @@
-import React, { useState, useEffect} from 'react';
-import { Container, Button, Input, Box, Column, Block, Field, Control, Heading } from "rbx";
+import React, { useState } from 'react';
+import { Container, Button, Input, Column, Block, 
+  Field, Control, Heading, Divider, Content } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
-import Checkout from './Checkout'
+import ReceiptModal from './ReceiptModal';
+import ShoppingTrips from './Components/ShoppingTrips';
 
 const useSelection = () => {
   const [selected, setSelected] = useState([]);
   const toggle = (x) => {
     setSelected(selected.includes(x) ? selected.filter(y => y !== x) : [x].concat(selected))
   };
-  return [ selected, toggle ];
+  const clearSelected = () => {
+    setSelected([]);
+  }
+  return [ selected, clearSelected, toggle ];
 };
 
 const ListPage = ({propItems, user, house}) => {
   const [productName, setProductName] = useState("");
   const [unit, setUnit] = useState("");
-  const [selected, toggle] = useSelection();
-  const [shopMode, setShopMode] = useState(false);
-  const [modalState, setModalState] = useState(false);
-
-  const shopModeOnClick = () => {
-    if (!shopMode){
-      setShopMode(true);
-      return;
-    }
-    setShopMode(false);
-    if (selected.length === 0) return;
-    else{
-      setModalState(true);
-    }
-  };
+  const [selected, clearSelected, toggle] = useSelection();
+  const [attachReceipt, setAttachReceipt] = useState(false);
 
   const handleProductChange = (event) => {
     setProductName(event.target.value);
@@ -49,12 +41,16 @@ const ListPage = ({propItems, user, house}) => {
   if (user && house){
   return (
     <Container>
+        <ReceiptModal 
+          selectedState={{selected, clearSelected}} 
+          modalState={{attachReceipt, setAttachReceipt}} 
+          house={house}/>
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Block/>
-                <ItemList items={propItems} user={user} shopMode={shopMode} selectedState={{selected, toggle}} house={house} />
+                <ItemList items={propItems} user={user} selectedState={{selected, toggle}} house={house} />
                 {selected.length === 0 ? <div/> :
-                <Button color='info'>
+                <Button color='info' onClick={() => setAttachReceipt(true)}>
                   Attach To Receipt 
                 </Button>}
                 <Block/>
@@ -73,6 +69,12 @@ const ListPage = ({propItems, user, house}) => {
                 </Column>
             </Column>
         </ColumnGroup>
+        <Block/>
+        <Divider color='info'>
+          Shopping Trips
+        </Divider>
+        <Block/>
+        <ShoppingTrips house={house}/>
     </Container>
   )}
   else if (user){

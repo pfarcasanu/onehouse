@@ -1,35 +1,38 @@
-import React, { Component, useState } from "react";
+import React, { } from "react";
 import "rbx/index.css";
 import {
   Navbar,
   Button,
-  Heading,
-  Title,
+  Content,
 } from "rbx";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import HouseOptions from './HouseOptions';
 
-const Banner = ({ user, house }) => {
+const Banner = ({ user, house, setHouse, housesData, usersData }) => {
   return (
     <Navbar color='info'>
       <Navbar.Brand>
-        <Navbar.Item>
-          <Heading className='medium-font'>
-            {!user ? "OneHouse" : user.displayName + "'s OneHouse"}
-          </Heading>
+        <Navbar.Item as="div">
+          <Content className='medium-font'>
+            {!user ? "OneHouse" : user.displayName}
+          </Content>
         </Navbar.Item>
         <Navbar.Burger />
       </Navbar.Brand>
       <Navbar.Menu>
         <Navbar.Segment align="start">
-          <Navbar.Item>
-            {house ? house : ""}
+          <Navbar.Item as="div">
+            <Content>{house ? house : ""}</Content>
           </Navbar.Item>
         </Navbar.Segment>
         <Navbar.Segment align="end">
-          <Navbar.Item>
+          <Navbar.Item as="div">
+            <HouseOptions house={house} setHouse={setHouse} user={user} housesData={housesData} usersData={usersData}/>
+          </Navbar.Item>
+          <Navbar.Item as="div">
             {!user ? <SignIn/> :
             <Logout user={user} house={house}/>}
           </Navbar.Item>

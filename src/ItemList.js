@@ -1,8 +1,12 @@
 import React from "react";
-import { Checkbox, Delete, Table, Button, Box } from "rbx";
+import { Delete, Table, Button, Box } from "rbx";
 import { deleteItem, updateItemNumber } from './firebaseHelpers';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 const ItemList = ({ items, user, selectedState, house }) => {
+  const buttonColor = (item) => selectedState.selected.includes(item) ? 'primary' : null;
+
   if (items.length === 0) {
     return (<React.Fragment></React.Fragment>);
   }
@@ -31,7 +35,12 @@ const ItemList = ({ items, user, selectedState, house }) => {
           {items.map(data =>
               <Table.Row key={data.productName}>
                 <Table.Cell>
-                  <Checkbox onClick={() => selectedState.toggle(data.productName)}/>
+                  <Button 
+                    onClick={() => selectedState.toggle(data)} 
+                    color={buttonColor(data)}
+                  >
+                    <FontAwesomeIcon icon={ faPlusCircle }/>
+                  </Button>
                 </Table.Cell>
                 <Table.Cell>
                   {data.productName} ({data.unit})

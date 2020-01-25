@@ -148,19 +148,22 @@ const HouseOptions = ({ house, setHouse, user, housesData, usersData }) => {
           usersData={usersData}
         />
         <Button.Group align="centered">
-          <Button
+
+          {house ? <div/> : <Button
             onClick={() => setCreateModalState(true)}
             disabled={house !== undefined}
           >
             Create House
-          </Button>
-          <Button
+          </Button>}
+
+          {house ? <div/> : <Button
             onClick={() => setJoinModalState(true)}
             disabled={house !== undefined}
           >
             Join House
-          </Button>
-          <Button
+          </Button>}
+
+          {house ? <Button
             onClick={() => {
               leaveHouse(user, setHouse);
               setHouse(undefined);
@@ -168,7 +171,7 @@ const HouseOptions = ({ house, setHouse, user, housesData, usersData }) => {
             disabled={house === undefined}
           >
             Leave House
-          </Button>
+          </Button> : <div/>}
         </Button.Group>
       </React.Fragment>
     );
