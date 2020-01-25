@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Button, Input, Column, Block, Field, Control, Heading } from "rbx";
+import { Container, Button, Input, Column, Block, 
+  Field, Control, Heading, Divider, Content } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
 import ReceiptModal from './ReceiptModal';
+import ShoppingTrips from './Components/ShoppingTrips';
 
 const useSelection = () => {
   const [selected, setSelected] = useState([]);
@@ -67,6 +69,12 @@ const ListPage = ({propItems, user, house}) => {
                 </Column>
             </Column>
         </ColumnGroup>
+        <Block/>
+        <Divider color='info'>
+          Shopping Trips
+        </Divider>
+        <Block/>
+        <ShoppingTrips house={house}/>
     </Container>
   )}
   else if (user){
