@@ -69,14 +69,21 @@ const ShoppingTrips = ({house}) => {
       <Column.Group>
         <Column size={4} offset={4}>
           <Container>
+            <Column.Group multiline centered>
             {receipts.map(r => 
-              <Button 
+            <Column>
+            <Button 
                 key={r.timeStamp} 
                 color='info'
                 onClick={() => receiptClick(r)}
+                size="medium"
               >
                 {getDate(r.timeStamp)}
-              </Button>)}
+              </Button>
+              <Block/>
+            </Column>
+              )}
+            </Column.Group>
           </Container>
         </Column>
       </Column.Group>
