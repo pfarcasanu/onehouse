@@ -6,7 +6,8 @@ import { imageUpload } from './Helpers/image';
 import { postReceipt } from './Helpers/receipt';
 import { deleteItem } from './firebaseHelpers';
 
-const ReceiptModal = ({selected, modalState, house}) => {
+const ReceiptModal = ({selectedState, modalState, house}) => {
+  const selected = selectedState.selected;
   const [file, setFile] = useState(null);
 
   const onSubmit = (file) => {
@@ -15,6 +16,7 @@ const ReceiptModal = ({selected, modalState, house}) => {
       postReceipt(house, url, selected);
     });
     selected.forEach(item => deleteItem(item.productName, house));
+    selectedState.clearSelected();
     modalState.setAttachReceipt(false);
   }
 

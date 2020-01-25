@@ -10,13 +10,16 @@ const useSelection = () => {
   const toggle = (x) => {
     setSelected(selected.includes(x) ? selected.filter(y => y !== x) : [x].concat(selected))
   };
-  return [ selected, toggle ];
+  const clearSelected = () => {
+    setSelected([]);
+  }
+  return [ selected, clearSelected, toggle ];
 };
 
 const ListPage = ({propItems, user, house}) => {
   const [productName, setProductName] = useState("");
   const [unit, setUnit] = useState("");
-  const [selected, toggle] = useSelection();
+  const [selected, clearSelected, toggle] = useSelection();
   const [attachReceipt, setAttachReceipt] = useState(false);
 
   const handleProductChange = (event) => {
@@ -36,7 +39,10 @@ const ListPage = ({propItems, user, house}) => {
   if (user && house){
   return (
     <Container>
-        <ReceiptModal selected={selected} modalState={{attachReceipt, setAttachReceipt}} house={house}/>
+        <ReceiptModal 
+          selectedState={{selected, clearSelected}} 
+          modalState={{attachReceipt, setAttachReceipt}} 
+          house={house}/>
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Block/>

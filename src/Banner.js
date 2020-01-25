@@ -9,8 +9,9 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import HouseOptions from './HouseOptions';
 
-const Banner = ({ user, house }) => {
+const Banner = ({ user, house, setHouse, housesData, usersData }) => {
   return (
     <Navbar color='info'>
       <Navbar.Brand>
@@ -28,6 +29,9 @@ const Banner = ({ user, house }) => {
           </Navbar.Item>
         </Navbar.Segment>
         <Navbar.Segment align="end">
+          <Navbar.Item>
+            <HouseOptions house={house} setHouse={setHouse} user={user} housesData={housesData} usersData={usersData}/>
+          </Navbar.Item>
           <Navbar.Item>
             {!user ? <SignIn/> :
             <Logout user={user} house={house}/>}
