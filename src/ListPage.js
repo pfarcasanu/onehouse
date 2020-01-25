@@ -36,7 +36,7 @@ const ListPage = ({propItems, user, house}) => {
   if (user && house){
   return (
     <Container>
-        <ReceiptModal selected={selected} modalState={{attachReceipt, setAttachReceipt}}/>
+        <ReceiptModal selected={selected} modalState={{attachReceipt, setAttachReceipt}} house={house}/>
         <ColumnGroup>
             <Column size={10} offset={1}>
                 <Block/>

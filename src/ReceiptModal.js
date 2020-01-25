@@ -1,9 +1,22 @@
-import React from 'react';
-import { Modal, Delete, File, Notification } from 'rbx';
+import React, { useState } from 'react';
+import { Modal, Delete, File, Notification, Button, Column } from 'rbx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { imageUpload } from './Helpers/image';
+import { postReceipt } from './Helpers/receipt';
+import { deleteItem } from './firebaseHelpers';
 
-const ReceiptModal = ({selected, modalState}) => {
+const ReceiptModal = ({selected, modalState, house}) => {
+  const [file, setFile] = useState(null);
+
+  const onSubmit = (file) => {
+    imageUpload(file).then(response => {
+      const url = response.data.secure_url;
+      postReceipt(house, url, selected);
+    });
+    selected.forEach(item => deleteItem(item.productName, house));
+    modalState.setAttachReceipt(false);
+  }
 
   return (
     <Modal active={modalState.attachReceipt}>
@@ -15,22 +28,38 @@ const ReceiptModal = ({selected, modalState}) => {
         </Modal.Card.Head>
         <Modal.Card.Body>
           {selected.map(item => 
-            <Notification key={item.productName} color='info'>
+            <Notification key={item.productName} color='primary'>
               {item.productName} for {item.neededBy.map(p => p.name).join(',')}
             </Notification>)}
         </Modal.Card.Body>
         <Modal.Card.Foot>
-          <File>
-            <File.Label>
-              <File.Input name="resume" />
-              <File.CTA>
-                <File.Icon>
-                  <FontAwesomeIcon icon={faUpload} />
-                </File.Icon>
-                <File.Label as="span">Choose a File</File.Label>
-              </File.CTA>
-            </File.Label>
-          </File>
+          <Column.Group centered>
+            <Column>
+              <File hasName>
+                <File.Label>
+                  <File.Input name="resume" onChange={e => setFile(e.target.files[0])}/>
+                  <File.CTA>
+                    <File.Icon>
+                      <FontAwesomeIcon icon={faUpload} />
+                    </File.Icon>
+                    <File.Label as="span">Choose a File</File.Label>
+                  </File.CTA>
+                  {!!file && (
+                  <File.Name>{file.name}</File.Name>
+                  )}
+                </File.Label>
+              </File>
+            </Column>
+            <Column>
+              <Button 
+                color='primary'
+                disabled={!file}
+                onClick={() => onSubmit(file)}
+              >
+                Upload
+              </Button>
+            </Column>
+          </Column.Group>
         </Modal.Card.Foot>
       </Modal.Card>
     </Modal>

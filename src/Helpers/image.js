@@ -1,6 +1,6 @@
 import axios from 'axios';
-const CLOUDINARY_UPLOAD_TRANSFORM_PRESET = 'jqktz5rl'; // img transformed to 200x200
-const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dxrank/upload';
+const CLOUDINARY_UPLOAD_TRANSFORM_PRESET = 'musxeeij'; // img transformed to 200x200
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dhc72wrqp/image/upload';
 
 const imageUpload = (file) => {
   const formData = new FormData();
