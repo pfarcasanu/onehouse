@@ -20,9 +20,9 @@ const ShoppingTrip = ({receipt, modalState}) => {
           <Container>
             {receipt.items.map(item => 
               <Notification key={item.productName}>
-                <b>{item.productName}</b> for
+                <b>{item.productName} ({item.unit})</b> for
                 <Block/>
-                {item.neededBy.map(p => `${p.name} (bought ${p.quantity})`).join(<Block/>)}
+                {item.neededBy.map(p => `${p.name} (bought ${p.quantity})`).join(', ')}
               </Notification>
             )}
             <Image.Container size='3by5'>
