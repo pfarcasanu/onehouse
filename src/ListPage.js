@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Button, Input, Column, Block, 
-  Field, Control, Heading, Divider, Content } from "rbx";
+  Field, Control, Heading, Divider } from "rbx";
 import { ColumnGroup } from 'rbx/grid/columns/column-group';
 import ItemList from './ItemList';
 import {saveItem} from './firebaseHelpers';
