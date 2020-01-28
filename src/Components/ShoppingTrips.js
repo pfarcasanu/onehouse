@@ -20,9 +20,9 @@ const ShoppingTrip = ({receipt, modalState}) => {
           <Container>
             {receipt.items.map(item => 
               <Notification key={item.productName}>
-                <b>{item.productName}</b> for
+                <b>{item.productName} ({item.unit})</b> for
                 <Block/>
-                {item.neededBy.map(p => `${p.name} (bought ${p.quantity})`).join(<Block/>)}
+                {item.neededBy.map(p => `${p.name} (bought ${p.quantity})`).join(', ')}
               </Notification>
             )}
             <Image.Container size='3by5'>
@@ -70,14 +70,21 @@ const ShoppingTrips = ({house}) => {
       <Column.Group>
         <Column size={4} offset={4}>
           <Container>
+            <Column.Group multiline centered>
             {receipts.map(r => 
-              <Button 
+            <Column>
+            <Button 
                 key={r.timeStamp} 
                 color='info'
                 onClick={() => receiptClick(r)}
+                size="medium"
               >
                 {getDate(r.timeStamp)}
-              </Button>)}
+              </Button>
+              <Block/>
+            </Column>
+              )}
+            </Column.Group>
           </Container>
         </Column>
       </Column.Group>

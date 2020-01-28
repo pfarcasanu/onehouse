@@ -15,24 +15,24 @@ const Banner = ({ user, house, setHouse, housesData, usersData }) => {
   return (
     <Navbar color='info'>
       <Navbar.Brand>
-        <Navbar.Item>
+        <Navbar.Item as="div">
           <Content className='medium-font'>
-            {!user ? "OneHouse" : user.displayName + "'s OneHouse"}
+            {!user ? "OneHouse" : user.displayName}
           </Content>
         </Navbar.Item>
         <Navbar.Burger />
       </Navbar.Brand>
       <Navbar.Menu>
         <Navbar.Segment align="start">
-          <Navbar.Item>
+          <Navbar.Item as="div">
             <Content>{house ? house : ""}</Content>
           </Navbar.Item>
         </Navbar.Segment>
         <Navbar.Segment align="end">
-          <Navbar.Item>
+          <Navbar.Item as="div">
             <HouseOptions house={house} setHouse={setHouse} user={user} housesData={housesData} usersData={usersData}/>
           </Navbar.Item>
-          <Navbar.Item>
+          <Navbar.Item as="div">
             {!user ? <SignIn/> :
             <Logout user={user} house={house}/>}
           </Navbar.Item>

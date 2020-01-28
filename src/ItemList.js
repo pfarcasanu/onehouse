@@ -4,6 +4,15 @@ import { deleteItem, updateItemNumber } from './firebaseHelpers';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
+const getTotalQuantity = (neededBy) => {
+  if (neededBy === undefined) {
+    return 0;
+  }
+  return Object.values(neededBy).reduce((total, person) => (
+    total + person.quantity
+  ), 0);
+};
+
 const ItemList = ({ items, user, selectedState, house }) => {
   const buttonColor = (item) => selectedState.selected.includes(item) ? 'primary' : null;
 
@@ -38,6 +47,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
                   <Button 
                     onClick={() => selectedState.toggle(data)} 
                     color={buttonColor(data)}
+                    disabled={getTotalQuantity(data.neededBy) === 0}
                   >
                     <FontAwesomeIcon icon={ faPlusCircle }/>
                   </Button>
@@ -62,9 +72,8 @@ const ItemList = ({ items, user, selectedState, house }) => {
                   </Button>
                 </Table.Cell>
                 <Table.Cell className="thin-col"
-                  >{!!data.neededBy ? Object.values(data.neededBy).reduce((total, person) => (
-                    total + person.quantity
-                  ), 0) : 0}</Table.Cell>
+                  >{getTotalQuantity(data.neededBy)}
+                </Table.Cell>
                 <Table.Cell className="thin-col">
                   <Button size="small" onClick={()=>updateItemNumber(user.displayName, data, 1, house)}>
                     +
