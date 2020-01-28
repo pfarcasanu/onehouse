@@ -1,5 +1,5 @@
 import React from "react";
-import { Delete, Table, Button, Box } from "rbx";
+import { Delete, Table, Button, Box, Heading } from "rbx";
 import { deleteItem, updateItemNumber } from './firebaseHelpers';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
   const buttonColor = (item) => selectedState.selected.includes(item) ? 'primary' : null;
 
   if (items.length === 0) {
-    return (<React.Fragment></React.Fragment>);
+    return (<Heading>No items to show yet. Add some to get started.</Heading>);
   }
   return (
     <Box>
