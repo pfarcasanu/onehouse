@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Column, Button, Modal, Container, Image, Delete, Notification, Block, Heading } from 'rbx';
+import { Column, Button, Modal, Container, Image, Delete, Notification, Block, Heading ,Card,Content} from 'rbx';
 import { db } from '../firebaseHelpers';
 
 const getDate = (timeStamp) => {
@@ -65,9 +65,8 @@ const ShoppingTrips = ({house}) => {
       console.log(items[i].neededBy)
       items[i].neededBy.forEach(element=>name.push(element['name']))
     }
-    console.log([...new Set(name)])
+   
     const names=[...new Set(name)]
-    // return Object.values(set)
     return names
   }
 
@@ -86,7 +85,7 @@ const ShoppingTrips = ({house}) => {
             <Column.Group multiline centered>
             {receipts.map(r => 
             <Column>
-            <Button 
+            {/* <Button 
                 key={r.timeStamp} 
                 color='info'
                 onClick={() => {receiptClick(r);      
@@ -95,7 +94,32 @@ const ShoppingTrips = ({house}) => {
               >
                 {getDate(r.timeStamp) }
                 {" "+getItem(r.items)}
+              </Button> */}
+              <Card>
+              <Card.Header>
+                <Card.Header.Title>
+                <Button 
+                key={r.timeStamp} 
+                color='info'
+                onClick={() => {receiptClick(r);      
+                }}
+                size="medium"
+              >
+                {getDate(r.timeStamp) }
+                {/* {" "+getItem(r.items)} */}
               </Button>
+                </Card.Header.Title>
+                <Card.Header.Icon as="a">
+                
+                </Card.Header.Icon>
+              </Card.Header>
+              <Card.Content>
+                <Content>
+                {" "+getItem(r.items)}
+                </Content>
+              </Card.Content>
+            
+            </Card>
               
               <Block/>
             </Column>
