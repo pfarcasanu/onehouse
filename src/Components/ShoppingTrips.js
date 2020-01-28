@@ -58,6 +58,17 @@ const ShoppingTrips = ({house}) => {
     };
   }, [house]);
 
+  const getItem=(items) =>{
+    const product=[]
+    items.map(item=>{
+      product.push(item.productName)
+    }
+    );
+    console.log(product);
+    return product.toString()
+
+  }
+
   if (receipts.length === 0) return (
     <Heading>
       Looks like you haven't been shopping yet. Select items and attach a receipt to get started.
@@ -76,11 +87,14 @@ const ShoppingTrips = ({house}) => {
             <Button 
                 key={r.timeStamp} 
                 color='info'
-                onClick={() => receiptClick(r)}
+                onClick={() => {receiptClick(r);          
+                }}
                 size="medium"
               >
-                {getDate(r.timeStamp)}
+                {getDate(r.timeStamp) }
+                {" "+getItem(r.items)}
               </Button>
+              
               <Block/>
             </Column>
               )}
