@@ -30,6 +30,7 @@ const ShoppingTrip = ({receipt, modalState}) => {
             </Image.Container>
           </Container>
         </Modal.Card.Body>
+        <Modal.Card.Foot />
       </Modal.Card>
     </Modal>
   )
