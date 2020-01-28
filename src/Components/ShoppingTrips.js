@@ -59,14 +59,16 @@ const ShoppingTrips = ({house}) => {
   }, [house]);
 
   const getItem=(items) =>{
-    const product=[]
-    items.map(item=>{
-      product.push(item.productName)
+    
+    const name=[]
+    for (var i in items){
+      console.log(items[i].neededBy)
+      items[i].neededBy.forEach(element=>name.push(element['name']))
     }
-    );
-    console.log(product);
-    return product.toString()
-
+    console.log([...new Set(name)])
+    const names=[...new Set(name)]
+    // return Object.values(set)
+    return names
   }
 
   if (receipts.length === 0) return (
@@ -87,7 +89,7 @@ const ShoppingTrips = ({house}) => {
             <Button 
                 key={r.timeStamp} 
                 color='info'
-                onClick={() => {receiptClick(r);          
+                onClick={() => {receiptClick(r);      
                 }}
                 size="medium"
               >
