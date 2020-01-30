@@ -58,16 +58,14 @@ const ShoppingTrips = ({house}) => {
     };
   }, [house]);
 
-  const getItem=(items) =>{
-    
-    const name=[]
-    for (var i in items){
-      console.log(items[i].neededBy)
-      items[i].neededBy.forEach(element=>name.push(element['name']))
+  const getNames = (items) => {
+    const name = [];
+    for (var i in items) {
+      items[i].neededBy.forEach(element => name.push(element.name));
     }
    
-    const names=[...new Set(name)]
-    return names
+    const names = [...new Set(name)].join(', ');
+    return names;
   }
 
   if (receipts.length === 0) return (
@@ -84,17 +82,7 @@ const ShoppingTrips = ({house}) => {
           <Container>
             <Column.Group multiline centered>
             {receipts.map(r => 
-            <Column>
-            {/* <Button 
-                key={r.timeStamp} 
-                color='info'
-                onClick={() => {receiptClick(r);      
-                }}
-                size="medium"
-              >
-                {getDate(r.timeStamp) }
-                {" "+getItem(r.items)}
-              </Button> */}
+            <Column key={r.timeStamp}>
               <Card>
               <Card.Header>
                 <Card.Header.Title>
@@ -106,7 +94,6 @@ const ShoppingTrips = ({house}) => {
                 size="medium"
               >
                 {getDate(r.timeStamp) }
-                {/* {" "+getItem(r.items)} */}
               </Button>
                 </Card.Header.Title>
                 <Card.Header.Icon as="a">
@@ -115,7 +102,7 @@ const ShoppingTrips = ({house}) => {
               </Card.Header>
               <Card.Content>
                 <Content>
-                {" "+getItem(r.items)}
+                {" "+getNames(r.items)}
                 </Content>
               </Card.Content>
             
