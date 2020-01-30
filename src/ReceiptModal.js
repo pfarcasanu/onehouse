@@ -31,7 +31,7 @@ const ReceiptModal = ({selectedState, modalState, house}) => {
         <Modal.Card.Body>
           {selected.map(item => 
             <Notification key={item.productName} color='primary'>
-              {item.productName} for {item.neededBy.map(p => p.name).join(',')}
+              {item.productName} for {item.neededBy.map(p => p.name).join(', ')}
             </Notification>)}
         </Modal.Card.Body>
         <Modal.Card.Foot>
