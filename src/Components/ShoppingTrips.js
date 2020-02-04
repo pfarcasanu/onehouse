@@ -53,7 +53,7 @@ const ShoppingTrips = ({house}) => {
   useEffect(() => {
     const handleData = snap => {
       if (snap.val().houses[house].receipts) {
-        setReceipts(Object.values(snap.val().houses[house].receipts));
+        setReceipts(Object.values(snap.val().houses[house].receipts).reverse());
       }
     };
     db.on("value", handleData, error => alert(error));
@@ -82,7 +82,7 @@ const ShoppingTrips = ({house}) => {
     <div>
       {!!receipt && <ShoppingTrip receipt={receipt} modalState={{active, setActive}}/>}
       <Column.Group>
-        <Column size={4} offset={4}>
+        <Column size={8} offset={2}>
           <Container>
             <Column.Group multiline centered>
             {receipts.map(r => 
