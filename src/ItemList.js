@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Delete, Table, Button, Box, Heading, Input, Notification } from "rbx";
+import { Delete, Table, Button, Box, Heading, Input } from "rbx";
 import { deleteItem, updateItemNumber } from "./firebaseHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
@@ -124,9 +124,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
                 <Button
                   disabled={!data.neededBy}
                   size="small"
-                  onClick={() =>
-                    updateItemNumber(user.displayName, data, -1, house)
-                  }
+                  onClick={() => updateItemNumber(user, data, -1, house)}
                 >
                   -
                 </Button>
@@ -137,9 +135,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
               <Table.Cell className="thin-col">
                 <Button
                   size="small"
-                  onClick={() =>
-                    updateItemNumber(user.displayName, data, 1, house)
-                  }
+                  onClick={() => updateItemNumber(user, data, 1, house)}
                 >
                   +
                 </Button>
