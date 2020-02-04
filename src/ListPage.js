@@ -1,97 +1,128 @@
-import React, { useState } from 'react';
-import { Container, Button, Input, Column, Block, 
-  Field, Control, Heading, Divider } from "rbx";
-import { ColumnGroup } from 'rbx/grid/columns/column-group';
-import ItemList from './ItemList';
-import {saveItem} from './firebaseHelpers';
-import ReceiptModal from './ReceiptModal';
-import ShoppingTrips from './Components/ShoppingTrips';
+import React, { useState } from "react";
+import {
+  Container,
+  Button,
+  Input,
+  Column,
+  Block,
+  Field,
+  Control,
+  Heading,
+  Divider
+} from "rbx";
+import { ColumnGroup } from "rbx/grid/columns/column-group";
+import ItemList from "./ItemList";
+import { saveItem } from "./firebaseHelpers";
+import ReceiptModal from "./ReceiptModal";
+import ShoppingTrips from "./Components/ShoppingTrips";
 
 const useSelection = () => {
   const [selected, setSelected] = useState([]);
-  const toggle = (x) => {
-    setSelected(selected.includes(x) ? selected.filter(y => y !== x) : [x].concat(selected))
+  const toggle = x => {
+    setSelected(
+      selected.includes(x)
+        ? selected.filter(y => y !== x)
+        : [x].concat(selected)
+    );
   };
   const clearSelected = () => {
     setSelected([]);
-  }
-  return [ selected, clearSelected, toggle ];
+  };
+  return [selected, clearSelected, toggle];
 };
 
-const ListPage = ({propItems, user, house}) => {
+const ListPage = ({ propItems, user, house }) => {
   const [productName, setProductName] = useState("");
   const [unit, setUnit] = useState("");
   const [selected, clearSelected, toggle] = useSelection();
   const [attachReceipt, setAttachReceipt] = useState(false);
 
-  const handleProductChange = (event) => {
+  const handleProductChange = event => {
     setProductName(event.target.value);
-  }
+  };
 
-  const handleUnitChange = (event) => {
+  const handleUnitChange = event => {
     setUnit(event.target.value);
-  }
+  };
 
   const handleSubmit = () => {
-    saveItem({ name: productName, unit: unit, creator: user.displayName, houseName: house });
+    saveItem({
+      name: productName,
+      unit: unit,
+      creator: user.displayName,
+      houseName: house
+    });
     setProductName("");
     setUnit("");
-  }
+  };
 
-  if (user && house){
-  return (
-    <Container>
-        <ReceiptModal 
-          selectedState={{selected, clearSelected}} 
-          modalState={{attachReceipt, setAttachReceipt}} 
-          house={house}/>
+  if (user && house) {
+    return (
+      <Container>
+        <ReceiptModal
+          selectedState={{ selected, clearSelected }}
+          modalState={{ attachReceipt, setAttachReceipt }}
+          house={house}
+        />
         <ColumnGroup>
-            <Column size={10} offset={1}>
-                <Block/>
-                <ItemList items={propItems} user={user} selectedState={{selected, toggle}} house={house} />
-                {selected.length === 0 ? <div/> :
-                <Button color='info' onClick={() => setAttachReceipt(true)}>
-                  Attach To Receipt 
-                </Button>}
-                <Block/>
-                <Column size="three-fifths" offset="one-fifth">
-                <Field align="centered" kind="addons">
-                    <Control expanded>
-                        <Input size="medium" placeholder="Eggs" value={productName} onChange={handleProductChange}/>
-                    </Control>
-                    <Control expanded>
-                        <Input size="medium" placeholder="dozen" value={unit} onChange={handleUnitChange}/>
-                    </Control>
-                    <Control>
-                        <Button size="medium" color="link" onClick={handleSubmit}>Add</Button>
-                    </Control>
-                </Field>
-                </Column>
+          <Column size={10} offset={1}>
+            <Block />
+            <ItemList
+              items={propItems}
+              user={user}
+              selectedState={{ selected, toggle }}
+              house={house}
+            />
+            {selected.length === 0 ? (
+              <div />
+            ) : (
+              <Button color="info" onClick={() => setAttachReceipt(true)}>
+                Attach To Receipt
+              </Button>
+            )}
+            <Block />
+            <Column size="three-fifths" offset="one-fifth">
+              <Field align="centered" kind="addons">
+                <Control expanded>
+                  <Input
+                    size="medium"
+                    placeholder="Eggs"
+                    value={productName}
+                    onChange={handleProductChange}
+                  />
+                </Control>
+                <Control expanded>
+                  <Input
+                    size="medium"
+                    placeholder="dozen"
+                    value={unit}
+                    onChange={handleUnitChange}
+                  />
+                </Control>
+                <Control>
+                  <Button size="medium" color="link" onClick={handleSubmit}>
+                    Add
+                  </Button>
+                </Control>
+              </Field>
             </Column>
+          </Column>
         </ColumnGroup>
-        <Block/>
-        <Divider color='info'>
-          Shopping Trips
-        </Divider>
-        <Block/>
-        <ShoppingTrips house={house}/>
-    </Container>
-  )}
-  else if (user){
+        <Block />
+        <Divider color="info">Shopping Trips</Divider>
+        <Block />
+        <ShoppingTrips house={house} />
+      </Container>
+    );
+  } else if (user) {
     return (
       <Heading className="medium-font">
         join or create a house to continue
       </Heading>
-    )
+    );
+  } else {
+    return <Heading className="medium-font">sign in to continue</Heading>;
   }
-  else {
-    return (
-      <Heading className="medium-font">
-        sign in to continue
-      </Heading>
-    )
-  }
-
-}
+};
 
 export default ListPage;

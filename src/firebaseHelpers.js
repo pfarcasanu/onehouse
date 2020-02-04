@@ -19,7 +19,8 @@ const saveItem = ({ name, creator, unit, houseName }) => {
         name: creator,
         quantity: 1
       }
-    ]
+    ],
+    notes: ""
   };
   db.child("houses")
     .child(houseName)
@@ -36,6 +37,21 @@ const deleteItem = (productName, houseName) => {
     .child(productName)
     .update({ visible: false })
     .catch(error => alert(error));
+};
+
+const updatingNotes = (houseName, data, note) => {
+  console.log(data);
+  if (note !== undefined && data["notes"] !== undefined) {
+    // let updatedNotes =
+    //   data["notes"] === ""
+    //     ? data["notes"].concat(note)
+    //     : data["notes"].concat("/ ", note);
+    db.child("houses")
+      .child(houseName)
+      .child("items")
+      .child(data.productName)
+      .update({ notes: note });
+  }
 };
 
 const updateItemNumber = (personName, data, incr, houseName) => {
@@ -119,14 +135,14 @@ const joinHouse = (user, houseName) => {
     .catch(error => alert(error));
 };
 
-const leaveHouse = ( user ) => {
-    db.child("users")
-      .child(user.uid)
-      .set({ uid: user.uid })
-      .catch(error => alert(error));
+const leaveHouse = user => {
+  db.child("users")
+    .child(user.uid)
+    .set({ uid: user.uid })
+    .catch(error => alert(error));
 };
 
-const createUser = ( user, usersData ) => {
+const createUser = (user, usersData) => {
   const userExists = usersData[user.uid] !== undefined;
   let userHouse = undefined;
   if (userExists) {
@@ -137,7 +153,7 @@ const createUser = ( user, usersData ) => {
   };
   if (userHouse !== undefined) {
     userAttrs["house"] = userHouse;
-  };
+  }
 
   if (usersData) {
     db.child("users")
@@ -156,5 +172,6 @@ export {
   createHouse,
   joinHouse,
   leaveHouse,
-  createUser  
+  createUser,
+  updatingNotes
 };
