@@ -8,12 +8,10 @@ const cors = require('cors')({origin: true});
 
 exports.SendEmail = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
-      
-    response.send("Hello from Firebase!");
-    SendEmail();
+      response.send("Hello from Firebase!");
+      SendEmail();
   });
 });
-
 
 const SendEmail = () => {
   var transporter = nodemailer.createTransport({

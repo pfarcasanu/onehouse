@@ -33,7 +33,7 @@ const ListPage = ({propItems, user, house}) => {
   }
 
   const handleSubmit = () => {
-    saveItem({ name: productName, unit: unit, creator: user.displayName, houseName: house });
+    saveItem({ name: productName, unit: unit, user: user, houseName: house });
     setProductName("");
     setUnit("");
   }

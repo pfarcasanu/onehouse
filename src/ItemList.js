@@ -67,7 +67,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
                   <Button 
                     disabled={!data.neededBy}
                     size="small"
-                    onClick={()=>updateItemNumber(user.displayName, data, -1, house)}>
+                    onClick={()=>updateItemNumber(user, data, -1, house)}>
                     -
                   </Button>
                 </Table.Cell>
@@ -75,7 +75,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
                   >{getTotalQuantity(data.neededBy)}
                 </Table.Cell>
                 <Table.Cell className="thin-col">
-                  <Button size="small" onClick={()=>updateItemNumber(user.displayName, data, 1, house)}>
+                  <Button size="small" onClick={()=>updateItemNumber(user, data, 1, house)}>
                     +
                   </Button>
                 </Table.Cell>

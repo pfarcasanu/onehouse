@@ -8,7 +8,7 @@ firebase.initializeApp(firebaseConfig);
 const functions = firebase.functions();
 const db = firebase.database().ref();
 
-const saveItem = ({ name, creator, unit, houseName }) => {
+const saveItem = ({ name, user, unit, houseName }) => {
   const itemAttrs = {
     visible: true,
     purchased: false,
@@ -16,7 +16,8 @@ const saveItem = ({ name, creator, unit, houseName }) => {
     unit,
     neededBy: [
       {
-        name: creator,
+        name: user.displayName,
+        email: user.email,
         quantity: 1
       }
     ]
@@ -38,7 +39,9 @@ const deleteItem = (productName, houseName) => {
     .catch(error => alert(error));
 };
 
-const updateItemNumber = (personName, data, incr, houseName) => {
+const updateItemNumber = (user, data, incr, houseName) => {
+  const personName = user.displayName;
+
   if (data.neededBy === undefined) {
     data.neededBy = [];
   }
@@ -56,6 +59,7 @@ const updateItemNumber = (personName, data, incr, houseName) => {
             ...Object.values(data.neededBy),
             {
               name: personName,
+              email: user.email,
               quantity: 1
             }
           ]
