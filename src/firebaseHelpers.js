@@ -41,8 +41,6 @@ const deleteItem = (productName, houseName) => {
 };
 
 const updatingNotes = (houseName, data, note) => {
-  console.log(data.productName);
-  console.log(note);
   if (note !== undefined) {
     // let updatedNotes =
     //   data["notes"] === ""

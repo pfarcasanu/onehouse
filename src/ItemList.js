@@ -92,7 +92,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
                 <div className="center">
                   <Input
                     size="small"
-                    onChange={e => handleNoteChange(e, data)}
+                    onBlur={e => handleNoteChange(e, data)}
                     defaultValue={data.notes}
                   />
                 </div>
