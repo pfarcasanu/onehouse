@@ -12,19 +12,22 @@ const ReceiptModal = ({selectedState, modalState, house}) => {
   const [file, setFile] = useState(undefined);
 
   const onSubmit = () => {
+    var sendEmail = functions.httpsCallable('SendEmail');
     if (file) {
       imageUpload(file).then(response => {
         const url = response.data.secure_url;
         postReceipt(house, url, selected);
+        sendEmail({items: selected, url: url}).catch(error => alert(error));
       });
     } else {
-      postReceipt(house, "n/a", selected);
+      const url = 'n/a';
+      postReceipt(house, url, selected);
+      sendEmail({items: selected, url: url}).catch(error => alert(error));
     }
-    var sendEmail = functions.httpsCallable('SendEmail');
-    sendEmail().catch(error => alert(error));
     selected.forEach(item => deleteItem(item.productName, house));
     selectedState.clearSelected();
     modalState.setAttachReceipt(false);
+    setFile(undefined);
   }
 
   return (
