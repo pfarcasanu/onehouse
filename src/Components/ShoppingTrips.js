@@ -25,9 +25,13 @@ const ShoppingTrip = ({receipt, modalState}) => {
                 {item.neededBy.map(p => `${p.name} (bought ${p.quantity})`).join(', ')}
               </Notification>
             )}
-            <Image.Container size='3by5'>
-              <Image src={receipt.url}/>
-            </Image.Container>
+            {
+              receipt.url !== "n/a" ?
+              <Image.Container size='3by5'>
+                <Image src={receipt.url} alt="No Receipt" />
+              </Image.Container>
+              : <Heading>No receipt uploaded</Heading>
+            }
           </Container>
         </Modal.Card.Body>
         <Modal.Card.Foot />
@@ -86,7 +90,7 @@ const ShoppingTrips = ({house}) => {
               <Card>
               <Card.Header>
                 <Card.Header.Title>
-                <Button 
+                <Button fullwidth
                 key={r.timeStamp} 
                 color='info'
                 onClick={() => {receiptClick(r);      
@@ -95,10 +99,8 @@ const ShoppingTrips = ({house}) => {
               >
                 {getDate(r.timeStamp) }
               </Button>
+
                 </Card.Header.Title>
-                <Card.Header.Icon as="a">
-                
-                </Card.Header.Icon>
               </Card.Header>
               <Card.Content>
                 <Content>

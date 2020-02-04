@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Delete, Table, Button, Box, Heading, Input, Notification } from "rbx";
+import { Delete, Table, Button, Box, Heading, Input } from "rbx";
 import { deleteItem, updateItemNumber } from "./firebaseHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
@@ -32,34 +32,34 @@ const ItemList = ({ items, user, selectedState, house }) => {
   const buttonColor = item =>
     selectedState.selected.includes(item) ? "primary" : null;
 
-  const getNotes = dbData => {
-    let data = Object.values(dbData.houses).filter(
-      h => h.houseName === house
-    )[0];
-    if (data !== undefined && data.items) {
-      let arr = Object.values(data.items).map(item => {
-        let arr = [];
-        if (!arr.includes(item.notes)) arr.push(item.notes);
-        return arr;
-      });
-      return arr;
-    }
-    //return data.items.milk.notes;
-    return "";
-  };
-  useEffect(() => {
-    const handleData = snap => {
-      if (snap.val()) {
-        console.log(house);
-        console.log(Object.values(snap.val().houses));
-        setNotes(getNotes(snap.val()));
-      }
-    };
-    db.on("value", handleData, error => alert(error));
-    return () => {
-      db.off("value", handleData);
-    };
-  }, []);
+  // const getNotes = dbData => {
+  //   let data = Object.values(dbData.houses).filter(
+  //     h => h.houseName === house
+  //   )[0];
+  //   if (data !== undefined && data.items) {
+  //     let arr = Object.values(data.items).map(item => {
+  //       let arr = [];
+  //       if (!arr.includes(item.notes)) arr.push(item.notes);
+  //       return arr;
+  //     });
+  //     return arr;
+  //   }
+  //   //return data.items.milk.notes;
+  //   return "";
+  // };
+  // useEffect(() => {
+  //   const handleData = snap => {
+  //     if (snap.val()) {
+  //       console.log(house);
+  //       console.log(Object.values(snap.val().houses));
+  //       setNotes(getNotes(snap.val()));
+  //     }
+  //   };
+  //   db.on("value", handleData, error => alert(error));
+  //   return () => {
+  //     db.off("value", handleData);
+  //   };
+  // }, []);
   if (items.length === 0) {
     return <Heading>No items to show yet. Add some to get started.</Heading>;
   }
