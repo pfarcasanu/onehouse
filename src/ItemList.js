@@ -27,6 +27,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
   const handleNoteSubmit = data => {
     if (data && house) {
       updatingNotes(house, data, input);
+      setAdd(false);
     }
   };
   const buttonColor = item =>
@@ -99,9 +100,8 @@ const ItemList = ({ items, user, selectedState, house }) => {
                   <Button
                     align
                     onClick={() => handleNoteSubmit(data)}
-                    disabled={add === false}
+                    static={add === false}
                     size="small"
-                    color="success"
                   >
                     Update
                   </Button>
