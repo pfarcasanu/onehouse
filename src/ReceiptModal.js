@@ -5,6 +5,7 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { imageUpload } from './Helpers/image';
 import { postReceipt } from './Helpers/receipt';
 import { deleteItem } from './firebaseHelpers';
+import { functions } from './firebaseHelpers';
 
 const ReceiptModal = ({selectedState, modalState, house}) => {
   const selected = selectedState.selected;
@@ -19,6 +20,8 @@ const ReceiptModal = ({selectedState, modalState, house}) => {
     } else {
       postReceipt(house, "n/a", selected);
     }
+    var sendEmail = functions.httpsCallable('SendEmail');
+    sendEmail().catch(error => alert(error));
     selected.forEach(item => deleteItem(item.productName, house));
     selectedState.clearSelected();
     modalState.setAttachReceipt(false);

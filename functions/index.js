@@ -7,9 +7,11 @@ const cors = require('cors')({origin: true});
 //
 
 exports.SendEmail = functions.https.onRequest((request, response) => {
-    cors(request, response, () => {
-      response.send("Hello from Firebase!");
-      SendEmail();
+  cors(request, response, () => {
+    SendEmail();
+    return {
+      'error': 0
+    };
   });
 });
 
