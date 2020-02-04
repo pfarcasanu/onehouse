@@ -8,13 +8,17 @@ import { deleteItem } from './firebaseHelpers';
 
 const ReceiptModal = ({selectedState, modalState, house}) => {
   const selected = selectedState.selected;
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(undefined);
 
-  const onSubmit = (file) => {
-    imageUpload(file).then(response => {
-      const url = response.data.secure_url;
-      postReceipt(house, url, selected);
-    });
+  const onSubmit = () => {
+    if (file) {
+      imageUpload(file).then(response => {
+        const url = response.data.secure_url;
+        postReceipt(house, url, selected);
+      });
+    } else {
+      postReceipt(house, "n/a", selected);
+    }
     selected.forEach(item => deleteItem(item.productName, house));
     selectedState.clearSelected();
     modalState.setAttachReceipt(false);
@@ -44,7 +48,7 @@ const ReceiptModal = ({selectedState, modalState, house}) => {
                     <File.Icon>
                       <FontAwesomeIcon icon={faUpload} />
                     </File.Icon>
-                    <File.Label as="span">Choose a File</File.Label>
+                    <File.Label as="span">Upload Receipt</File.Label>
                   </File.CTA>
                   {!!file && (
                   <File.Name>{file.name}</File.Name>
@@ -55,10 +59,9 @@ const ReceiptModal = ({selectedState, modalState, house}) => {
             <Column>
               <Button 
                 color='primary'
-                disabled={!file}
-                onClick={() => onSubmit(file)}
+                onClick={() => onSubmit()}
               >
-                Upload
+                Notify Roomates
               </Button>
             </Column>
           </Column.Group>
