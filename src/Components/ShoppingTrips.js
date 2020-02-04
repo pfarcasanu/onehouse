@@ -86,7 +86,7 @@ const ShoppingTrips = ({house}) => {
               <Card>
               <Card.Header>
                 <Card.Header.Title>
-                <Button 
+                <Button fullwidth
                 key={r.timeStamp} 
                 color='info'
                 onClick={() => {receiptClick(r);      
@@ -95,10 +95,8 @@ const ShoppingTrips = ({house}) => {
               >
                 {getDate(r.timeStamp) }
               </Button>
+
                 </Card.Header.Title>
-                <Card.Header.Icon as="a">
-                
-                </Card.Header.Icon>
               </Card.Header>
               <Card.Content>
                 <Content>
