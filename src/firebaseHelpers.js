@@ -41,8 +41,9 @@ const deleteItem = (productName, houseName) => {
 };
 
 const updatingNotes = (houseName, data, note) => {
-  console.log(data);
-  if (note !== undefined && data["notes"] !== undefined) {
+  console.log(data.productName);
+  console.log(note);
+  if (note !== undefined) {
     // let updatedNotes =
     //   data["notes"] === ""
     //     ? data["notes"].concat(note)

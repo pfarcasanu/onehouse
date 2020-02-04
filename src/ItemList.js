@@ -15,52 +15,16 @@ const getTotalQuantity = neededBy => {
 };
 
 const ItemList = ({ items, user, selectedState, house }) => {
-  const [input, setInput] = useState("");
-  const [notes, setNotes] = useState([]); // just notes collection
-  const [add, setAdd] = useState(false);
-  const handleNoteChange = event => {
-    console.log(event.target.value);
-    if (event.target.value.length > 0) setAdd(true);
-    setInput(event.target.value);
-  };
 
-  const handleNoteSubmit = data => {
+  const handleNoteChange = (event, data) => {
     if (data && house) {
-      updatingNotes(house, data, input);
-      setAdd(false);
+      updatingNotes(house, data, event.target.value);
     }
   };
+
   const buttonColor = item =>
     selectedState.selected.includes(item) ? "primary" : null;
 
-  // const getNotes = dbData => {
-  //   let data = Object.values(dbData.houses).filter(
-  //     h => h.houseName === house
-  //   )[0];
-  //   if (data !== undefined && data.items) {
-  //     let arr = Object.values(data.items).map(item => {
-  //       let arr = [];
-  //       if (!arr.includes(item.notes)) arr.push(item.notes);
-  //       return arr;
-  //     });
-  //     return arr;
-  //   }
-  //   //return data.items.milk.notes;
-  //   return "";
-  // };
-  // useEffect(() => {
-  //   const handleData = snap => {
-  //     if (snap.val()) {
-  //       console.log(house);
-  //       console.log(Object.values(snap.val().houses));
-  //       setNotes(getNotes(snap.val()));
-  //     }
-  //   };
-  //   db.on("value", handleData, error => alert(error));
-  //   return () => {
-  //     db.off("value", handleData);
-  //   };
-  // }, []);
   if (items.length === 0) {
     return <Heading>No items to show yet. Add some to get started.</Heading>;
   }
@@ -73,6 +37,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
             <Table.Heading>Product (unit)</Table.Heading>
             <Table.Heading>Needed by (quantity)</Table.Heading>
             <Table.Heading colSpan="3">Quantity</Table.Heading>
+            <Table.Heading>Notes</Table.Heading>
             <Table.Heading></Table.Heading>
           </Table.Row>
         </Table.Head>
@@ -89,25 +54,8 @@ const ItemList = ({ items, user, selectedState, house }) => {
                 </Button>
               </Table.Cell>
               <Table.Cell>
-                {data.productName} ({data.unit})<br></br>
-                <Box color="success">{data.notes}</Box>
-                <div className="center">
-                  <Input
-                    size="small"
-                    onChange={handleNoteChange}
-                    defaultValue={data.notes}
-                  />
-                  <Button
-                    align
-                    onClick={() => handleNoteSubmit(data)}
-                    static={add === false}
-                    size="small"
-                  >
-                    Update
-                  </Button>
-                </div>
+                {data.productName} ({data.unit})
               </Table.Cell>
-
               <Table.Cell>
                 {!!data.neededBy
                   ? Object.values(data.neededBy).map(person => (
@@ -139,6 +87,15 @@ const ItemList = ({ items, user, selectedState, house }) => {
                 >
                   +
                 </Button>
+              </Table.Cell>
+              <Table.Cell>
+                <div className="center">
+                  <Input
+                    size="small"
+                    onChange={e => handleNoteChange(e, data)}
+                    defaultValue={data.notes}
+                  />
+                </div>
               </Table.Cell>
               <Table.Cell className="align-right">
                 <Delete
