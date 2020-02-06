@@ -47,6 +47,8 @@ const SendEmail = (items, url) => {
     }
   });
 
+  console.log('emails: ', GetEmails(items));
+
   var mailOptions = {
     from: 'cs394onehouse2020@gmail.com',
     to: GetEmails(items),

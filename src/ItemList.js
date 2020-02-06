@@ -16,14 +16,11 @@ const getTotalQuantity = neededBy => {
 
 const ItemList = ({ items, user, selectedState, house }) => {
 
-  const handleNoteChange = (event, data) => {
-    if (data && house) {
-      updatingNotes(house, data, event.target.value);
-    }
-  };
-
-  const buttonColor = item =>
-    selectedState.selected.includes(item) ? "primary" : null;
+  // const handleNoteChange = (event, data) => {
+  //   if (data && house) {
+  //     updatingNotes(house, data, event.target.value);
+  //   }
+  // };
 
   const rowSelected = item =>
     selectedState.selected.includes(item);
