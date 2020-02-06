@@ -25,19 +25,21 @@ const ItemList = ({ items, user, selectedState, house }) => {
   const buttonColor = item =>
     selectedState.selected.includes(item) ? "primary" : null;
 
+  const rowSelected = item =>
+    selectedState.selected.includes(item);
+
   if (items.length === 0) {
     return <Heading>No items to show yet. Add some to get started.</Heading>;
   }
   return (
     <Box>
+      <Heading>tap to add items to cart</Heading>
       <Table fullwidth hoverable>
         <Table.Head>
           <Table.Row>
-            <Table.Heading></Table.Heading>
-            <Table.Heading>Product (unit)</Table.Heading>
-            <Table.Heading>Needed by (quantity)</Table.Heading>
+            <Table.Heading>Product</Table.Heading>
+            <Table.Heading>People</Table.Heading>
             <Table.Heading colSpan="3">Quantity</Table.Heading>
-            <Table.Heading>Notes</Table.Heading>
             <Table.Heading></Table.Heading>
           </Table.Row>
         </Table.Head>
@@ -45,18 +47,17 @@ const ItemList = ({ items, user, selectedState, house }) => {
           {items.map(data => (
             <Table.Row 
               key={data.productName}
+              onClick={() => selectedState.toggle(data)}
+              selected={rowSelected(data)}
             >
               <Table.Cell>
-                <Button
-                  onClick={() => selectedState.toggle(data)}
-                  color={buttonColor(data)}
-                  disabled={getTotalQuantity(data.neededBy) === 0}
-                >
-                  <FontAwesomeIcon icon={faCartPlus} />
-                </Button>
-              </Table.Cell>
-              <Table.Cell>
-                {data.productName} ({data.unit})
+                {data.productName} ({data.unit}) 
+                {/* <br/>
+                <Input
+                    size="small"
+                    onBlur={e => handleNoteChange(e, data)}
+                    defaultValue={data.notes}
+                  /> */}
               </Table.Cell>
               <Table.Cell>
                 {!!data.neededBy
@@ -64,7 +65,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
                       <React.Fragment
                         key={`${data.productName}-${person.name}`}
                       >
-                        {person.name} ({person.quantity})
+                        {person.name.split(' ')[0]} ({person.quantity})
                         <br />
                       </React.Fragment>
                     ))
@@ -89,15 +90,6 @@ const ItemList = ({ items, user, selectedState, house }) => {
                 >
                   +
                 </Button>
-              </Table.Cell>
-              <Table.Cell>
-                <div className="center">
-                  <Input
-                    size="small"
-                    onBlur={e => handleNoteChange(e, data)}
-                    defaultValue={data.notes}
-                  />
-                </div>
               </Table.Cell>
               <Table.Cell className="align-right">
                 <Delete
