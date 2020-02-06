@@ -1,21 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Column,
-  Button,
-  Modal,
   Container,
-  Image,
-  Delete,
   Notification,
   Block,
-  Heading,
-  Card,
   Content,
-  Divider,
-  Level,
-  Title,
-  Box,
-  List
+  Title
 } from "rbx";
 
 const SignInScreen = ({ user }) => {
@@ -40,30 +30,30 @@ const SignInScreen = ({ user }) => {
             <Content textAlign="left">
               <ul>
                 <li>
-                  <Title size={4} substitle>
+                  <Title size={4} subtitle>
                     {" "}
-                    Create a House
+                    Create a house
                   </Title>
                 </li>
                 <Block />
                 <li>
-                  <Title size={4} substitle>
+                  <Title size={4} subtitle>
                     {" "}
-                    Select a House Key and Password
+                    Select a house name and password
                   </Title>
                 </li>
                 <Block />
                 <li>
-                  <Title size={4} substitle>
+                  <Title size={4} subtitle>
                     {" "}
-                    Share your Housekey with your Roomates
+                    Share your house name and password with your roomates
                   </Title>
                 </li>
                 <Block />
                 <li>
-                  <Title size={4} substitle>
+                  <Title size={4} subtitle>
                     {" "}
-                    Get Shopping!
+                    Get shopping!
                   </Title>
                 </li>
               </ul>
@@ -79,30 +69,30 @@ const SignInScreen = ({ user }) => {
             <Content textAlign="left">
               <ul>
                 <li>
-                  <Title size={4} substitle>
+                  <Title size={4} subtitle>
                     {" "}
-                    Join a House
+                    Join a house
                   </Title>
                 </li>
                 <Block />
                 <li>
-                  <Title size={4} substitle>
+                  <Title size={4} subtitle>
                     {" "}
-                    Get your House Name and Password from your roomates
+                    Get your house name and password from your roomates
                   </Title>
                 </li>
                 <Block />
                 <li>
-                  <Title size={4} substitle>
+                  <Title size={4} subtitle>
                     {" "}
-                    Enter your House Name and Password
+                    Enter your house name and password
                   </Title>
                 </li>
                 <Block />
                 <li>
-                  <Title size={4} substitle>
+                  <Title size={4} subtitle>
                     {" "}
-                    Get Shopping!
+                    Get shopping!
                   </Title>
                 </li>
               </ul>

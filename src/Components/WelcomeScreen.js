@@ -1,20 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Column,
-  Button,
-  Modal,
   Container,
   Image,
-  Delete,
-  Notification,
-  Block,
-  Heading,
-  Card,
-  Content,
-  Divider,
-  Level,
-  Title,
-  Box
+  Title
 } from "rbx";
 
 const WelcomeScreen = () => {
