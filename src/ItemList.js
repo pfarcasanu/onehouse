@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Delete, Table, Button, Box, Heading, Input } from "rbx";
 import { deleteItem, updateItemNumber } from "./firebaseHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { updatingNotes, db } from "./firebaseHelpers";
 const getTotalQuantity = neededBy => {
   if (neededBy === undefined) {
@@ -43,14 +43,16 @@ const ItemList = ({ items, user, selectedState, house }) => {
         </Table.Head>
         <Table.Body>
           {items.map(data => (
-            <Table.Row key={data.productName}>
+            <Table.Row 
+              key={data.productName}
+            >
               <Table.Cell>
                 <Button
                   onClick={() => selectedState.toggle(data)}
                   color={buttonColor(data)}
                   disabled={getTotalQuantity(data.neededBy) === 0}
                 >
-                  <FontAwesomeIcon icon={faPlusCircle} />
+                  <FontAwesomeIcon icon={faCartPlus} />
                 </Button>
               </Table.Cell>
               <Table.Cell>
