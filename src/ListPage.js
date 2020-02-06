@@ -15,6 +15,8 @@ import ItemList from "./ItemList";
 import { saveItem } from "./firebaseHelpers";
 import ReceiptModal from "./ReceiptModal";
 import ShoppingTrips from "./Components/ShoppingTrips";
+import WelcomeScreen from "./Components/WelcomeScreen"
+import SignInScreen from './Components/SignInScreen'
 
 const useSelection = () => {
   const [selected, setSelected] = useState([]);
@@ -111,12 +113,10 @@ const ListPage = ({ propItems, user, house }) => {
     );
   } else if (user) {
     return (
-      <Heading className="medium-font">
-        join or create a house to continue
-      </Heading>
+      <SignInScreen user={user}/>
     );
   } else {
-    return <Heading className="medium-font">sign in to continue</Heading>;
+    return <WelcomeScreen/>;
   }
 };
 
