@@ -4,6 +4,7 @@ import { deleteItem, updateItemNumber } from "./firebaseHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { updatingNotes, db } from "./firebaseHelpers";
+
 const getTotalQuantity = neededBy => {
   if (neededBy === undefined) {
     return 0;
@@ -21,6 +22,11 @@ const ItemList = ({ items, user, selectedState, house }) => {
   //     updatingNotes(house, data, event.target.value);
   //   }
   // };
+
+  const needsItem = (neededBy, name) => {
+    const names = Object.values(neededBy).map(person => person.name);
+    return names.indexOf(name) >= 0;
+  }
 
   const rowSelected = item =>
     selectedState.selected.includes(item);
@@ -70,7 +76,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
               </Table.Cell>
               <Table.Cell className="thin-col">
                 <Button
-                  disabled={!data.neededBy}
+                  disabled={!data.neededBy || !needsItem(data.neededBy, user.displayName)}
                   size="small"
                   onClick={() => updateItemNumber(user, data, -1, house)}
                 >
