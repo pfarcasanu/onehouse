@@ -54,6 +54,37 @@ const updatingNotes = (houseName, data, note) => {
   }
 };
 
+// const increaseItemNumber = (user, data, houseName) => {
+//   const personName = user.displayName;
+//   if (data.neededBy === undefined) {
+//     data.neededBy = [];
+//   }
+
+//   const entryIndex = Object.values(data.neededBy).findIndex(
+//     person => person.name === personName
+//   );
+
+//   if (entryIndex === -1) { // USER IS NOT IN THE NEEDEDBY ARRAY
+//     db.child("houses")
+//         .child(houseName)
+//         .child("items")
+//         .child(data.productName)
+//         .update({
+//           neededBy: [
+//             ...Object.values(data.neededBy),
+//             {
+//               name: personName,
+//               email: user.email,
+//               quantity: 1
+//             }
+//         ]
+//     })
+//   }
+//   else { //USER IS IN THE NEEDEDBY ARRAY
+
+//   }
+// }
+
 const updateItemNumber = (user, data, incr, houseName) => {
   const personName = user.displayName;
   if (data.neededBy === undefined) {
@@ -102,6 +133,15 @@ const updateItemNumber = (user, data, incr, houseName) => {
         .catch(error => alert(error));
     } else if (updatedQty === 0) {
       newNeededBy.pop();
+      if (newNeededBy.length === 0){
+        db.child("houses")
+          .child(houseName)
+          .child("items")
+          .child(data.productName)
+          .update({
+            visible: false
+          })
+      }
       db.child("houses")
         .child(houseName)
         .child("items")
