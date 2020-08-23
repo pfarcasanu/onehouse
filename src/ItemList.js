@@ -17,12 +17,6 @@ const getTotalQuantity = neededBy => {
 
 const ItemList = ({ items, user, selectedState, house }) => {
 
-  // const handleNoteChange = (event, data) => {
-  //   if (data && house) {
-  //     updatingNotes(house, data, event.target.value);
-  //   }
-  // };
-
   const needsItem = (neededBy, name) => {
     const names = Object.values(neededBy).map(person => person.name);
     return names.indexOf(name) >= 0;
@@ -34,6 +28,7 @@ const ItemList = ({ items, user, selectedState, house }) => {
   if (items.length === 0) {
     return <Heading>No items to show yet. Add some to get started.</Heading>;
   }
+  
   return (
     <Box>
       <Heading>tap to add items to cart</Heading>
@@ -55,12 +50,6 @@ const ItemList = ({ items, user, selectedState, house }) => {
             >
               <Table.Cell>
                 {data.productName} ({data.unit}) 
-                {/* <br/>
-                <Input
-                    size="small"
-                    onBlur={e => handleNoteChange(e, data)}
-                    defaultValue={data.notes}
-                  /> */}
               </Table.Cell>
               <Table.Cell>
                 {!!data.neededBy
@@ -75,30 +64,72 @@ const ItemList = ({ items, user, selectedState, house }) => {
                   : ""}
               </Table.Cell>
               <Table.Cell className="thin-col">
-                <Button
-                  disabled={!data.neededBy || !needsItem(data.neededBy, user.displayName)}
+                {
+                  selectedState.selected.includes(data)
+                  ? <Button
+                  //disabled={!data.neededBy || !needsItem(data.neededBy, user.displayName)}
                   size="small"
-                  onClick={() => updateItemNumber(user, data, -1, house)}
+                  invisible
                 >
                   -
                 </Button>
+                  : <Button
+                  //disabled={!data.neededBy || !needsItem(data.neededBy, user.displayName)}
+                  size="small"
+                  disabled = {selectedState.selected.includes(data)}
+                  onClick={(e) => {
+                    updateItemNumber(user, data, -1, house)
+                    e.stopPropagation()
+                  }
+                }
+                >
+                  -
+                </Button>
+                }
+                
               </Table.Cell>
               <Table.Cell className="thin-col">
                 {getTotalQuantity(data.neededBy)}
               </Table.Cell>
               <Table.Cell className="thin-col">
-                <Button
+                {
+                  selectedState.selected.includes(data)
+                  ? <Button
                   size="small"
-                  onClick={() => updateItemNumber(user, data, 1, house)}
+                  invisible
                 >
                   +
                 </Button>
+                  : <Button
+                  size="small"
+
+                  onClick={(e) => {
+                    updateItemNumber(user, data, 1, house)
+                    e.stopPropagation()
+                  }
+                }
+                >
+                  +
+                </Button>
+                }
               </Table.Cell>
               <Table.Cell className="align-right">
-                <Delete
-                  as="button"
-                  onClick={() => deleteItem(data.productName, house)}
+              {
+                selectedState.selected.includes(data)
+                ? <Delete
+                as="button"
+                invisible
                 />
+                : <Delete
+                as="button"
+                onClick={(e) => {
+                  deleteItem(data.productName, house)
+                  e.stopPropagation()
+                  }
+                }
+                />
+              }
+    
               </Table.Cell>
             </Table.Row>
           ))}
